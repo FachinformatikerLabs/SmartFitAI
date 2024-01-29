@@ -46,7 +46,7 @@ Hier seid ihr, das megastarke Team hinter SmartFitAI:
 - Dennis Ollhoff - Der technische Leiter, unser Captain
 - Danny Mohr - Developer, Code-Magier
 - Kien Huy Hang - Developer, Bug-Zähmer
-- Tobias Engbrooks - Developer, Feature-Künstler
+- Tobias Engbroks - Developer, Feature-Künstler
 - Benjamin Ellerbrock - Developer, der Mann fürs Feintuning
 
 Falls ihr lieber Superheld, Ninja oder Jedi sein wollt, sagt einfach Bescheid. Wir sind flexibel!
