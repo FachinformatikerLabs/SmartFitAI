@@ -1,29 +1,47 @@
 # Hauptanwendungsskript
 
-# Spielereien mit kivy
+# Module, die man installieren muss, damit Kivy funktioniert
+# python -m pip install kivy[base] kivy_examples
+# python -m pip install pygame
 
 from kivy.app import App
-from kivy.uix.label import Label
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.uix.image import Image
+from kivy.uix.textinput import TextInput
 
+Window.size = (800,800)
+#Definieren der verschiedenen Screens:
+class FirstWindow(Screen):
 
-class MyApp(App):
+    pass
+
+class SecondWindow(Screen):
+    pass
+
+class ThirdWindow(Screen):
+    pass
+
+class FourthWindow(Screen):
+    pass
+
+class FifthWindow(Screen):
+    pass
+
+class WindowManager(ScreenManager):
+    pass
+
+kv = Builder.load_file("resources\SmartFit_GUI.kv", encoding="utf8")
+
+class SmartFitAIApp(App):
     def build(self):
-        Window.clearcolor = (0.4, 0.9, 0.2, 0.85)
-        layout = FloatLayout()
-        label1 = Label(text = "SmartFitAI", size_hint=(0.5, 0.5), pos_hint={"center_x":0.5, "center_y":0.8}, font_size="30sp")
-        label2 = Label(text = "Gesund und bewusst essen \nund dabei nicht die Nährwerte aus dem Auge verlieren", size_hint=(0.5, 0.7), pos_hint={"center_x":0.5, "center_y":0.5})
-        button1 = Button(text = "New User", size_hint=(0.2, 0.1), pos_hint={"center_x": 0.25, "center_y" : 0.3})
-        button2 = Button(text = "Login", size_hint=(0.2, 0.1), pos_hint={"center_x": 0.75, "center_y" : 0.3})
-        layout.add_widget(label1)
-        layout.add_widget(label2)
-        layout.add_widget(button1)
-        layout.add_widget(button2)
-
-      
-        return layout
+        Window.clearcolor = (85/255, 110/255, 83/255, 1)
+        return kv
     
-if __name__ == "__main__":
-    MyApp().run()
+    
+if __name__=="__main__":
+    SmartFitAIApp().run()
+
