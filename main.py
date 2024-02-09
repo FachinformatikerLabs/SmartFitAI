@@ -34,7 +34,7 @@ class FifthWindow(Screen):
 class WindowManager(ScreenManager):
     pass
 
-kv = Builder.load_file("resources\SmartFit_GUI.kv", encoding="utf8")
+kv = Builder.load_file("resources/SmartFit_GUI.kv", encoding="utf8")
 
 class SmartFitAIApp(App):
     def build(self):
