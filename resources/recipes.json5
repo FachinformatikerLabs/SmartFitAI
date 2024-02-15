@@ -1,1 +1,32 @@
 # Beispielrezepte zum testen für den Anfang
+[
+    {
+        "name": "Pfannkuchen",
+        "ingredients": [
+            {"name": "Mehl", "quantity": "200g", "caloriesPerGram": 0.364},
+            {"name": "Eier", "quantity": "2", "caloriesPerGram": 1.55},
+            {"name": "Milch", "quantity": "300ml", "caloriesPerGram": 0.42},
+            {"name": "Butter", "quantity": "50g", "caloriesPerGram": 7.17}
+        ],
+        "allergens": ["Gluten", "Eier", "Milchprodukte"],
+        "method": [
+            "In einer großen Schüssel Mehl, Eier und Milch glatt rühren.",
+            "Eine leicht gebutterte Pfanne bei mittlerer bis hoher Hitze erhitzen.",
+            "Eine viertel Tasse Teig in die Pfanne geben und in jede Richtung schwenken. Von beiden Seiten braun backen und heiß servieren."
+        ]
+    },
+    {
+        "name": "Römersalat",
+        "ingredients": [
+            {"name": "Romanasalat", "quantity": "300g", "caloriesPerGram": 0.17},
+            {"name": "Croutons", "quantity": "100g", "caloriesPerGram": 4.80},
+            {"name": "Parmesankäse", "quantity": "50g", "caloriesPerGram": 4.31},
+            {"name": "Cocktail Dressing", "quantity": "100ml", "caloriesPerGram": 8.90}
+        ],
+        "allergens": ["Gluten", "Milchprodukte", "Eier", "Fisch"],
+        "method": [
+            "In einer großen Salatschüssel Römersalat, Croutons und Parmesankäse mischen.",
+            "Dressing über den Salat geben, umrühren und sofort servieren."
+        ]
+    },
+]
