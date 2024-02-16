@@ -1,3 +1,4 @@
+#:kivy 2.3.0
 <CreateUser>:
    name: "NewUser"
    GridLayout:
@@ -5,8 +6,8 @@
       size: root.width, root.height
 
       Image:
-         source: "resources\Logo.PNG"
-         allow_stretch: True
+         source: "resources/logo.png"
+         fit_mode: "contain"
          size_hint_x : 0.5
          size_hint_y : 0.5
          pos_hint: {"center_x": 0.5, "center_y": 0.6}

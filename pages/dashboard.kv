@@ -1,3 +1,4 @@
+#:kivy 2.3.0
 <Dashboard>:
     name: "Dashboard"
     
@@ -12,13 +13,13 @@
 
         Image:
             pos_hint: {"center_x": 0.67, "center_y": 0.4}
-            source: "resources\Bild Menu - 1.jpg"
-            allow_stretch: True
+            source: "resources/menu_beispiel.jpg"
+            fit_mode: "contain"
             size_hint_x : 0.4
 
         Image:
-            source: "resources\Logo.PNG"
-            allow_stretch: True
+            source: "resources/Logo.png"
+            fit_mode: "contain"
             size_hint_x : 0.25
             size_hint_y : 0.25
             pos_hint: {"center_x": 0.8, "center_y": 0.85}
