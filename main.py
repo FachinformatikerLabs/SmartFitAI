@@ -13,35 +13,49 @@ from kivy.core.window import Window
 from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 
-Window.size = (800,800)
 #Definieren der verschiedenen Screens:
-class FirstWindow(Screen):
+class Welcome(Screen):
+   pass
 
-    pass
+class CreateUser(Screen):
+   pass
 
-class SecondWindow(Screen):
-    pass
+class Dashboard(Screen):
+   pass
 
-class ThirdWindow(Screen):
-    pass
+class RecipeSearch(Screen):
+   pass
 
-class FourthWindow(Screen):
-    pass
+class IngredientSearch(Screen):
+   pass
 
-class FifthWindow(Screen):
-    pass
+class AllergenSearch(Screen):
+   pass
 
 class WindowManager(ScreenManager):
-    pass
+   pass
 
-kv = Builder.load_file("resources/SmartFit_GUI.kv", encoding="utf8")
+# Loading multible .kv Design files
+Builder.load_file("pages/welcome.kv", encoding="utf8")
+Builder.load_file("pages/registration.kv", encoding="utf8")
+Builder.load_file("pages/dashboard.kv", encoding="utf8")
+Builder.load_file("pages/search.kv", encoding="utf8")
+'''Builder.load_file("pages/login.kv", encoding="utf8")'''
 
 class SmartFitAIApp(App):
-    def build(self):
-        Window.clearcolor = (85/255, 110/255, 83/255, 1)
-        return kv
-    
-    
+   def build(self):
+      Window.size = (800,800)                                  # Window Size for all Views
+      Window.clearcolor = (85/255, 110/255, 83/255, 1)         # Window Color for all Views
+      sm = WindowManager()
+      sm.add_widget(Welcome(name='Welcome'))
+      sm.add_widget(CreateUser(name='NewUser'))
+      sm.add_widget(Dashboard(name='Dashboard'))
+      sm.add_widget(RecipeSearch(name='RecipeSearch'))
+      sm.add_widget(IngredientSearch(name='IngredientSearch'))
+      sm.add_widget(AllergenSearch(name='AllergenSearch'))
+
+      return sm
+
 if __name__=="__main__":
-    SmartFitAIApp().run()
+   SmartFitAIApp().run()
 
