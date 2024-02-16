@@ -1,0 +1,68 @@
+<Welcome>:
+
+    name: "Welcome"
+    FloatLayout:
+        Image:
+            source: "resources\Logo.PNG"
+            allow_stretch: True
+            size_hint_x : 0.5
+            size_hint_y : 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+        TextInput :   
+            multiline : False
+            size_hint : (0.2, 0.05)
+            pos_hint: {"center_x": 0.75, "center_y": 0.22} 
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+
+        Label:
+            text: "Username"
+            size_hint: (0.5, 0.7)
+            pos_hint: {"center_x": 0.55, "center_y": 0.22}
+            halign: "left"
+            color: (209/255, 212/255, 201/255, 1)
+                        
+        TextInput : 
+            multiline : False
+            size_hint : (0.2, 0.05)
+            pos_hint: {"center_x": 0.75, "center_y": 0.16} 
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+
+        Label:
+            text: "Passwort"
+            size_hint: (0.2, 0.05)
+            pos_hint: {"center_x": 0.55, "center_y": 0.16}
+            halign: "left"
+            color: (209/255, 212/255, 201/255, 1)
+
+        Label:
+            text: "Gesund und bewusst essen \nund dabei die Nährwerte nicht\naus dem Auge verlieren"
+            size_hint: (0.5, 0.7)
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            halign: "center"
+            color: (209/255, 212/255, 201/255, 1)
+
+        Button:
+            text: "Create new user"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.75, "center_y": 0.05} 
+            halign:"center"
+            size_hint: (0.2, 0.05)
+            background_normal: ''
+            background_color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "NewUser"
+            color: (209/255, 212/255, 201/255, 1)
+        
+        Button:
+            text: "Login"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.75, "center_y": 0.1} 
+            halign:"center"
+            size_hint: (0.2, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "Dashboard"
+           

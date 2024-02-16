@@ -1,0 +1,396 @@
+WindowManager:
+    RecipeSearch:        #Rezepte
+    IngredientSearch:       #Zutatensuche
+    AllergenSearch:        #Allergensuche
+
+<RecipeSearch>:
+    name: "RecipeSearch"
+
+    FloatLayout:
+        Label: 
+            text: "Wähle dein Lieblingsessen"
+            size_hint: (0.8, 0.5)
+            pos_hint: {"center_x": 0.4, "center_y": 0.8}
+            font_size: "40sp"
+            halign: "center"
+            size_hint: (0.3, 0.1)
+
+        Image:
+            source: "resources\Logo.PNG"
+            allow_stretch: True
+            size_hint_x : 0.25
+            size_hint_y : 0.25
+            pos_hint: {"center_x": 0.8, "center_y": 0.85}
+
+        Button: 
+            text: "Start"
+            border: 0, 32, 0, 32
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.15, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "Welcome"            
+
+        Button: 
+            text: "Rezeptsuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.31, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 0.5)
+            color: (85/255, 110/255, 83/255, 0.5)
+            on_release: app.root.current = "RecipeSearch"
+
+        Button: 
+            text: "Zutatensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.47, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "IngredientSearch" 
+
+        Button: 
+            text: "Allergensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.63, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "AllergenSearch"
+
+        Button: 
+            text: "Neues Rezept"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        Button: 
+            text: "Suchen"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.6} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        TextInput : 
+            text: "Name des Gerichtes"
+            multiline : False
+            size_hint : (0.64, 0.05)
+            pos_hint: {"center_x": 0.395, "center_y": 0.6} 
+            color: (85/255, 110/255, 83/255, 1)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+    
+        Label: 
+            text: "Hier stehen dann \ndiverse Zutaten \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3, 0.3) 
+            pos_hint: {'center_x': 0.225, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                
+        Label: 
+            text: "Hier stehen dann \nHinweise zu Allergenen \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3,0.3) 
+            pos_hint: {'center_x': 0.715, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Button: 
+            text: "Zum Gericht"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.75, "center_y": 0.1} 
+            halign:"center"
+            size_hint: (0.2, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+
+
+
+<IngredientSearch>:
+    name: "IngredientSearch"
+
+    FloatLayout:
+        Label: 
+            text: "Wähle dein Lieblingszutaten"
+            size_hint: (0.8, 0.5)
+            pos_hint: {"center_x": 0.4, "center_y": 0.8}
+            font_size: "40sp"
+            halign: "center"
+            size_hint: (0.3, 0.1)
+
+        Image:
+            source: "resources\Logo.PNG"
+            allow_stretch: True
+            size_hint_x : 0.25
+            size_hint_y : 0.25
+            pos_hint: {"center_x": 0.8, "center_y": 0.85}
+
+        Button: 
+            text: "Start"
+            border: 0, 32, 0, 32
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.15, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "Welcome"            
+
+        Button: 
+            text: "Rezeptsuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.31, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "RecipeSearch"
+
+        Button: 
+            text: "Zutatensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.47, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 0.5)
+            color: (85/255, 110/255, 83/255, 0.5)
+            on_release: app.root.current = "IngredientSearch" 
+
+        Button: 
+            text: "Allergensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.63, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "AllergenSearch"
+
+        Button: 
+            text: "Neues Rezept"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        Button: 
+            text: "Suchen"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.6} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        TextInput : 
+            text: "Zutat"
+            multiline : False
+            size_hint : (0.64, 0.05)
+            pos_hint: {"center_x": 0.395, "center_y": 0.6} 
+            color: (85/255, 110/255, 83/255, 1)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+    
+        Label: 
+            text: "Hier stehen dann \ndiverse Rezeptnamen \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3, 0.3) 
+            pos_hint: {'center_x': 0.225, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                
+        Label: 
+            text: "Hier stehen dann \nHinweise zu Allergenen \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3,0.3) 
+            pos_hint: {'center_x': 0.715, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Button: 
+            text: "Zum Gericht"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.75, "center_y": 0.1} 
+            halign:"center"
+            size_hint: (0.2, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+
+<AllergenSearch>:
+    name: "AllergenSearch"
+
+    FloatLayout:
+        Label: 
+            text: "Welche Allergene willst du meiden"
+            size_hint: (0.8, 0.5)
+            pos_hint: {"center_x": 0.4, "center_y": 0.8}
+            font_size: "40sp"
+            halign: "center"
+            size_hint: (0.3, 0.1)
+
+        Image:
+            source: "resources\Logo.PNG"
+            allow_stretch: True
+            size_hint_x : 0.25
+            size_hint_y : 0.25
+            pos_hint: {"center_x": 0.8, "center_y": 0.85}
+
+        Button: 
+            text: "Start"
+            border: 0, 32, 0, 32
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.15, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "Welcome"            
+
+        Button: 
+            text: "Rezeptsuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.31, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+            on_release: app.root.current = "RecipeSearch"
+
+        Button: 
+            text: "Zutatensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.47, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        Button: 
+            text: "Allergensuche"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.63, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 0.5)
+            color: (85/255, 110/255, 83/255, 0.5)
+            on_release: app.root.current = "AllergenSearch"
+
+
+
+        Button: 
+            text: "Neues Rezept"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.7} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        Button: 
+            text: "Suchen"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.79, "center_y": 0.6} 
+            halign:"center"  
+            size_hint: (0.15, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
+
+        TextInput : 
+            text: "Zutat"
+            multiline : False
+            size_hint : (0.64, 0.05)
+            pos_hint: {"center_x": 0.395, "center_y": 0.6} 
+            color: (85/255, 110/255, 83/255, 1)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+    
+        Label: 
+            text: "Hier stehen dann \ndiverse Rezeptnamen \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3, 0.3) 
+            pos_hint: {'center_x': 0.225, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                
+        Label: 
+            text: "Hier stehen dann \nZutaten, die die Allergnene \nenthalten \n1. \n2."
+            color: (184/255, 15/255, 10/255, 1)
+            size_hint: (0.3,0.3) 
+            pos_hint: {'center_x': 0.715, 'center_y': 0.4}  
+            background_color: (209/255, 212/255, 201/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Button: 
+            text: "Zum Gericht"
+            text_size: (None, None)
+            pos_hint: {"center_x": 0.75, "center_y": 0.1} 
+            halign:"center"
+            size_hint: (0.2, 0.05)
+            background_normal: ''
+            background_color: (209/255, 212/255, 201/255, 1)
+            color: (85/255, 110/255, 83/255, 1)
