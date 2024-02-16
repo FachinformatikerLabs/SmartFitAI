@@ -25,8 +25,52 @@
         ],
         "allergens": ["Gluten", "Milchprodukte", "Eier", "Fisch"],
         "method": [
-            "In einer großen Salatschüssel Römersalat, Croutons und Parmesankäse mischen.",
+            "In einer großen Salatschüssel Romanarsalatblätter, Croutons und Parmesankäse mischen.",
             "Dressing über den Salat geben, umrühren und sofort servieren."
         ]
+    },
+        {
+        "name": "Curry Huhn",
+        "ingredients": [
+            {"name": "Hühnerbrust", "quantity": "500g", "caloriesPerGram": 1.65}, 
+            {"name": "Currypulver", "quantity": "10g", "caloriesPerGram": 3.25}, 
+            {"name": "Kokosmilch", "quantity": "400ml", "caloriesPerGram": 2.30}, 
+            {"name": "Zwiebel", "quantity": "200g", "caloriesPerGram": 0.40}, 
+            {"name": "Knoblauch", "quantity": "20g", "caloriesPerGram": 1.49}, 
+            {"name": "Ingwer", "quantity": "1 Stück", "caloriesPerGram": 0.80}, 
+            {"name": "Öl", "quantity": "10g", "caloriesPerGram": 8.84}, 
+        ],
+        "allergens": [], 
+        "method": [
+            "Hühnerbrust in Würfel schneiden und mit Salz und Pfeffer würzen.",
+            "Öl in einer Pfanne erhitzen, Zwiebel, Knoblauch und Ingwer anbraten.",
+            "Hühnerbrust hinzufügen und anbraten, bis es braun wird.",
+            "Currypulver einrühren und kurz mitbraten.",
+            "Mit Kokosmilch ablöschen und ca. 20 Minuten köcheln lassen.",
+            "Mit Reis servieren.",
+        ],
+    },
+    {
+        "name": "Rindfleisch mit Brokkoli",
+        ingredients: [
+            {"name": "Rindfleisch", "quantity": "500g", "caloriesPerGram": 2.52}, 
+            {"name": "Brokkoli", "quantity": "300g", "caloriesPerGram": 0.34}, 
+            {"name": "Sojasauce", "quantity": "30g", "caloriesPerGram": 0.53}, 
+            {"name": "Knoblauch", "quantity": "30g", "caloriesPerGram": 1.49}, 
+            {"name": "Ingwer", "quantity": "30g", "caloriesPerGram": 0.80}, 
+            {"name": "Öl", "quantity": "20g", "caloriesPerGram": 8.84}, 
+            {"name": "Wasser", "quantity": "100ml", "caloriesPerGram": 0}, 
+            {"name": "Speisestärke", "quantity": "10g", "caloriesPerGram": 3.80},  
+        ],
+        "allergens": ["Sojasauce"], 
+        "method": [
+            "Rindfleisch in dünne Scheiben schneiden.",
+            "Brokkoli in Röschen teilen und in Salzwasser kurz blanchieren.",
+            "Öl in einem Wok erhitzen, Knoblauch und Ingwer darin anbraten.",
+            "Rindfleisch hinzufügen und schnell braten, bis es fast gar ist.",
+            "Brokkoli und Sojasauce dazugeben und gut vermischen.",
+            "Wasser mit Speisestärke und Zucker verrühren, zum Wok geben und aufkochen, bis die Sauce eindickt.",
+            "Mit Reis servieren.",
+        ],
     },
 ]
