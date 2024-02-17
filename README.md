@@ -8,7 +8,7 @@ willkommen bei unserem coolen Projekt „SmartFitAI“! Hier bringen wir etwas S
 SmartFitAI ist nicht nur eine App – es ist unsere Mission, personalisierte Ernährungspläne und Rezepte zu kreieren, die so einzigartig sind wie unsere Nutzer. Dank der KI lernt die App ständig dazu und passt sich an die Bedürfnisse und Vorlieben der Benutzer an. Klingt ziemlich smart, oder?
 
 ## Der Entwicklungsplan
-
+Diesen findet Ihr [hier](https://github.com/FachinformatikerLabs/SmartFitAI/blob/main/.github/WIKI/entwicklungsplan.md).
 
 ## Struktur des Ganzen
 Hier ist der Fahrplan für unser Projekt:
