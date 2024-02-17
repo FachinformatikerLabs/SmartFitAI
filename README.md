@@ -49,9 +49,8 @@ Hier seid ihr, das megastarke Team hinter SmartFitAI:
 - Tobias Engbroks - Developer, Feature-Künstler
 - Benjamin Ellerbrock - Developer, der Mann fürs Feintuning
 
-## Alles Weitere
+### Alle weiteren Informationen zum projekt findet ihr in unserem [WIKI](https://github.com/FachinformatikerLabs/SmartFitAI/wiki/Entwicklungsplan)
 
-Alle weiteren Informationen zum projekt findet ihr in unserem [WIKI](https://github.com/FachinformatikerLabs/SmartFitAI/wiki/Entwicklungsplan)
 ---
 
 Rocken wir dieses Projekt! 🚀💻🥗
