@@ -1,0 +1,16 @@
+name: 📝 Clean Item
+description: Erstellen eines neuen Issues für das Projekt
+title: '[BACKLOG] - [Task] -'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte fülle die folgenden Informationen aus, um ein neues Issuefür das Projekt zu erstellen.
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Beschreibung
+      description: Gib eine detaillierte Beschreibung des Issues an. Was soll umgesetzt werden und warum?
+      placeholder: Detaillierte Beschreibung hier...
+    validations:
+      required: true
