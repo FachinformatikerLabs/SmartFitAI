@@ -1,16 +1,222 @@
 #:kivy 2.3.0
+#:import Factory kivy.factory.Factory
+
+# Definition des Pop Ups zur Auswahl der Allergene. Aktuell noch Rekursiv. In Zukunft ersetzen durch auslesen einer Allergenliste mithilfe einer Schleife, die dann die Elemtente erstellt.
+<Allergen@Popup>:
+   title: "Bitte wählen Sie Ihre Allergien"
+   auto_dismiss: False
+   size_hint: 0.5, 0.5
+   pos_hint: {'center_x': 0.5,'center_y': 0.5}
+
+# Definition Inhalt des Pop Ups
+   MDGridLayout:
+      cols: 2
+      size_hint: 0.5,0.5
+      pos_hint: {'center_x': 0.5,'center_y': 0.5}
+      padding: ('10dp', '10dp', '10dp', '10dp')
+      # TODO: Rekursion
+      MDLabel:
+         text: "Weichtiere"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Krebstiere"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Fisch"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Erdnüsse"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Schalenfrüchte"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Milch"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Eier"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Schwefeldioxid"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Sesam"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Senf"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Sellerie"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Soja"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Gluten"
+         color:
+      CheckBox:
+         active:
+
+      MDLabel:
+         text: "Gluten"
+         color:
+      CheckBox:
+         active:
+      Button:
+         text: 'Schliessen'
+         on_release: root.dismiss()
+
 <CreateUser>:
    name: "NewUser"
-   GridLayout:
-      cols:2
-      size: root.width, root.height
 
-      Image:
-         source: "resources/logo.png"
-         fit_mode: "contain"
-         size_hint_x : 0.5
-         size_hint_y : 0.5
-         pos_hint: {"center_x": 0.5, "center_y": 0.6}
+# Hintergrundbild
+   Image:
+      source: 'resources/bg.png'
+      fit_mode: "fill"
 
-      Label:
-         text:'Willkommen bei Smart Fit AI'
+# Box Für Oberen Text
+   MDBoxLayout:
+      orientation: 'vertical'
+      pos_hint: {'center_x': 0.5,'top': 0.95}
+      size_hint: 0.5, 0.1
+
+      MDLabel:
+         text: "Willkommen bei Smart Fit AI"
+         font_style: "Display"
+         color:
+
+      MDLabel:
+         text: "Dein Schlüssel zu gesunder Ernährung. Registriere dich jetzt und starte durch!"
+         font_style: "Title"
+         color:
+
+# Box Für Text Felder
+   MDBoxLayout:
+      orientation: 'vertical'
+      spacing: '30dp'
+      pos_hint: {'center_x': 0.5,'top': 0.9}
+      size_hint: 0.5, 0.6
+
+      MDTextField:
+         mode: "filled"
+         MDTextFieldLeadingIcon:
+            icon: "account"
+         MDTextFieldHintText:
+            text: "Benutzername"
+         MDTextFieldHelperText:
+            text: "Bitte gebe deinen Benutzernamen ein"
+            mode: "persistent"
+
+      MDTextField:
+         mode: "filled"
+         MDTextFieldLeadingIcon:
+            icon: "mail"
+         MDTextFieldHintText:
+            text: "E-Mail"
+         MDTextFieldHelperText:
+            text: "Bitte gebe deine E-Mail Adresse an"
+            mode: "persistent"
+
+      MDTextField:
+         mode: "filled"
+         MDTextFieldLeadingIcon:
+            icon: "calendar-range"
+         MDTextFieldHintText:
+            text: "Dein Geburtsdatum"
+         MDTextFieldHelperText:
+            text: "DD/MM/YY"
+            mode: "persistent"
+
+      MDTextField:
+         mode: "filled"
+         MDTextFieldLeadingIcon:
+            icon: "key"
+         MDTextFieldHintText:
+            text: "Passwort"
+         MDTextFieldHelperText:
+            text: "Bitte gebe dein gewünschtes Passwort"
+            mode: "persistent"
+
+      MDTextField:
+         mode: "filled"
+         MDTextFieldLeadingIcon:
+            icon: "key-link"
+         MDTextFieldHintText:
+            text: "Passwort Wiederholen"
+         MDTextFieldHelperText:
+            text: "Bitte Wiederhole dein Passwort"
+            mode: "persistent"
+
+# Button für Allergene
+      MDButton:
+         style: "tonal"
+         on_release: Factory.Allergen().open()
+         pos_hint: {'center_x': 0.5}
+         size_hint_x: 0.5
+         MDButtonIcon:
+            icon: "flower-pollen-outline"
+         MDButtonText:
+            text: "Deine Allergien"
+
+# Box für die Buttons Login / Neuer Benutzer
+   MDBoxLayout:
+      adaptive_size: True
+      orientation: 'horizontal'
+      pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+      spacing: '50dp'
+      padding: ('0dp', '30dp', '0dp', '0dp')
+
+# Login Button
+      MDButton:
+         style: "elevated"
+         pos_hint: {'center_x': 0.5}
+         on_release: app.root.current = "Welcome"
+         MDButtonIcon:
+            icon: "arrow-left-bold"
+         MDButtonText:
+            text: "Zurück"
+
+# Neuer Benutzer Button
+      MDButton:
+         style: "elevated"
+         on_release: app.root.current = "Dashboard"
+         MDButtonIcon:
+            icon: "account-plus-outline"
+         MDButtonText:
+            text: "Registrieren"
