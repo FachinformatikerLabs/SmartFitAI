@@ -7,9 +7,6 @@ willkommen bei unserem coolen Projekt „SmartFitAI“! Hier bringen wir etwas S
 ## Was geht ab mit SmartFitAI?
 SmartFitAI ist nicht nur eine App – es ist unsere Mission, personalisierte Ernährungspläne und Rezepte zu kreieren, die so einzigartig sind wie unsere Nutzer. Dank der KI lernt die App ständig dazu und passt sich an die Bedürfnisse und Vorlieben der Benutzer an. Klingt ziemlich smart, oder?
 
-## Der Entwicklungsplan
-
-
 ## Struktur des Ganzen
 Hier ist der Fahrplan für unser Projekt:
 
@@ -52,7 +49,7 @@ Hier seid ihr, das megastarke Team hinter SmartFitAI:
 - Tobias Engbroks - Developer, Feature-Künstler
 - Benjamin Ellerbrock - Developer, der Mann fürs Feintuning
 
-Falls ihr lieber Superheld, Ninja oder Jedi sein wollt, sagt einfach Bescheid. Wir sind flexibel!
+### Alle weiteren Informationen zum projekt findet ihr in unserem [WIKI](https://github.com/FachinformatikerLabs/SmartFitAI/wiki/Entwicklungsplan)
 
 ---
 

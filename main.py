@@ -6,6 +6,7 @@
 # pip install https://github.com/kivymd/KivyMD/archive/master.zip für KiviMD 2.0.1
 # ihr müsst jetzt auch bcrypt installieren bcrypt https://pypi.org/project/bcrypt/ da wir von der superbase signup auf eine eigene umgestiegen sind. in der wir einfach die datenbank füllen und unsere eigene login logik schreiben. Da passwörter nicht klar gespeichert werden nutzen wir bcrypt für die verschlüsselung des passworts
 
+
 from kivymd.app import MDApp
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
@@ -18,6 +19,7 @@ from kivy.properties import StringProperty
 from database.conn import supabase
 import bcrypt
 
+
 class CommonNavigationRailItem(MDNavigationRailItem):
    text = StringProperty()
    icon = StringProperty()
@@ -29,31 +31,35 @@ class Welcome(MDScreen):
 class CreateUser(MDScreen):
 
    # Der Supabase shit
-   def register_user(self):
-    user_name = self.ids.user_name.text
-    email = self.ids.email.text
-    password = self.ids.password.text
-    birthday = self.ids.birthday.text
+   class CreateUser(MDScreen):
+    def register_user(self):
+        user_name = self.ids.user_name.text
+        email = self.ids.email.text
+        password = self.ids.password.text
+        birthday = self.ids.birthday.text
 
-    # Hier hashen wir das Passwort mit bcrypt
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        # Hier hashen wir das Passwort mit bcrypt
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-    # Hier erstellen wir den Benutzer
-    data = {
-        "user_name": user_name,
-        "email": email,
-        "password": hashed_password,
-        "birthday": birthday,
-    }
-    
-    supabase.table("user_profiles").insert(data).execute()
-    print(f"Versuch der Registrierung für {email} abgeschlossen.")
+        # Hier erstellen wir den Benutzer
+        data = {
+            "user_name": user_name,
+            "email": email,
+            "password": hashed_password,
+            "birthday": birthday,
+        }
 
+        # Führe die Datenbankeinfügung aus und prüfe auf Erfolg
+        error = supabase.table("user_profiles").insert(data).execute()
 
+        # Ohne Fehler geht's zum dashboard, macht zwar wenig Sinn aber machen wir mal so
+        if not error:
+            self.manager.current = 'Dashboard'
+        else:
+            print(f"Registrierung fehlgeschlagen für {email}: {error}")
 
+        print(f"Versuch der Registrierung für {email} abgeschlossen.")
 
-
-   # Die Allergie checkbox wo ich keine Kästchen sehe :D
    def checkbox_click(self, instances, value):
       if value == True:
          pass
@@ -78,6 +84,7 @@ class WindowManager(ScreenManager):
 class SmartFitAIApp(MDApp):
    def build(self):
       self.supabase = supabase
+
 
 # Loading multible .kv Design files
       Builder.load_file("pages/welcome.kv", encoding="utf8")

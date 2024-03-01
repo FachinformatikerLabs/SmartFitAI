@@ -1,0 +1,47 @@
+name: 🛠 Task
+description: Erstellen eines neuen Tasks für das Projekt
+title: '[TASK] - '
+labels: [task]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte fülle die folgenden Informationen aus, um einen neuen Task für das Projekt zu erstellen.
+  - type: textarea
+    id: aufgabenbeschreibung
+    attributes:
+      label: Aufgabenbeschreibung
+      description: Gib eine klare und präzise Beschreibung des Tasks an. Was muss getan werden?
+      placeholder: Detaillierte Aufgabenbeschreibung hier...
+    validations:
+      required: true
+  - type: textarea
+    id: ziel
+    attributes:
+      label: Ziel des Tasks
+      description: Was ist das Ziel oder der Zweck dieses Tasks? Was soll erreicht werden?
+      placeholder: Ziel des Tasks hier einfügen...
+    validations:
+      required: true
+  - type: dropdown
+    id: prioritaet
+    attributes:
+      label: Priorität
+      description: Wähle die Priorität dieses Tasks.
+      options:
+        - Niedrig
+        - Mittel
+        - Hoch
+        - Dringend
+    validations:
+      required: true
+  - type: checkboxes
+    id: labels
+    attributes:
+      label: Zusätzliche Labels
+      description: Wähle alle zutreffenden Labels für diesen Task.
+      options:
+        - label: Bug
+        - label: Feature
+        - label: Verbesserung
+        - label: Dokumentation

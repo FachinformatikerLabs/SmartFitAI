@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🙌 Beitragshinweise
+    url: https://nyxb.nexus/contribute
+    about: Bitte lies dies durch.
+  - name: 📜 Verhaltenskodex
+    url: https://nyxb.nexus/code-of-conduct
+    about: Bitte lies dies durch.
+  - name: ⁉️ Warum und Wie man eine Reproduktion erstellt?
+    url: https://nyxb.nexus/posts/why-reproductions-are-required
+    about: Eine Reproduktion ist sehr wichtig, falls nur du das problem hast müssen wir es rekonstruieren!
