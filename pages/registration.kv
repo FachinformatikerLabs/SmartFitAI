@@ -134,6 +134,7 @@
       size_hint: 0.5, 0.6
 
       MDTextField:
+         id: user_name
          mode: "filled"
          MDTextFieldLeadingIcon:
             icon: "account"
@@ -144,6 +145,7 @@
             mode: "persistent"
 
       MDTextField:
+         id: email
          mode: "filled"
          MDTextFieldLeadingIcon:
             icon: "mail"
@@ -154,6 +156,7 @@
             mode: "persistent"
 
       MDTextField:
+         id: birthday
          mode: "filled"
          MDTextFieldLeadingIcon:
             icon: "calendar-range"
@@ -164,6 +167,7 @@
             mode: "persistent"
 
       MDTextField:
+         id: password
          mode: "filled"
          MDTextFieldLeadingIcon:
             icon: "key"
@@ -174,6 +178,7 @@
             mode: "persistent"
 
       MDTextField:
+         id: password_check
          mode: "filled"
          MDTextFieldLeadingIcon:
             icon: "key-link"
@@ -215,6 +220,7 @@
 # Neuer Benutzer Button
       MDButton:
          style: "elevated"
+         on_release: root.register_user() 
          on_release: app.root.current = "Dashboard"
          MDButtonIcon:
             icon: "account-plus-outline"
