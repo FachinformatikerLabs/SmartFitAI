@@ -14,6 +14,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.pickers import MDDockedDatePicker
 from kivymd.uix.navigationrail import MDNavigationRailItem
 from kivy.properties import StringProperty
+from database.conn import supabase
 
 class CommonNavigationRailItem(MDNavigationRailItem):
    text = StringProperty()
@@ -24,7 +25,24 @@ class Welcome(MDScreen):
    pass
 
 class CreateUser(MDScreen):
-   pass
+
+   def register_user(self):
+      user_name = self.ids.user_name.text
+      email = self.ids.email.text
+      password = self.ids.password.text
+
+      if not email or not password or not user_name:
+         print("Geht nicht!")
+         return
+      
+      user, error = supabase.auth.sign_up(email = email, password = password)
+
+      if error:
+         print(f"Fehler: {error.message}")
+         return
+      else:
+         print(f"Du hast es geschaft {email}")
+
    def checkbox_click(self, instances, value):
       if value == True:
          pass
@@ -48,6 +66,7 @@ class WindowManager(ScreenManager):
 
 class SmartFitAIApp(MDApp):
    def build(self):
+      self.supabase = supabase
 
 # Loading multible .kv Design files
       Builder.load_file("pages/welcome.kv", encoding="utf8")
@@ -58,7 +77,7 @@ class SmartFitAIApp(MDApp):
 
 # Definition verschiedner Layouts (Aktuell nur "Darkmode")
       self.theme_cls.theme_style = "Dark"
-      self.theme_cls.primary_palette = "Darkgreen" 
+      self.theme_cls.primary_palette = "Darkblue" 
 
       Window.size = (1920,1080)
 
