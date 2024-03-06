@@ -30,8 +30,6 @@ class Welcome(MDScreen):
 
 class CreateUser(MDScreen):
 
-   # Der Supabase shit
-   class CreateUser(MDScreen):
     def register_user(self):
         user_name = self.ids.user_name.text
         email = self.ids.email.text
@@ -60,11 +58,11 @@ class CreateUser(MDScreen):
 
         print(f"Versuch der Registrierung für {email} abgeschlossen.")
 
-   def checkbox_click(self, instances, value):
-      if value == True:
-         pass
-      else:
-         pass
+    def checkbox_click(self, instances, value):
+        if value == True:
+            pass
+        else:
+            pass
 
 class Dashboard(MDScreen):
    pass
