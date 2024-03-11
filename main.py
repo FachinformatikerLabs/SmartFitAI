@@ -25,7 +25,7 @@ class CommonNavigationRailItem(MDNavigationRailItem):
    icon = StringProperty()
 
 #Definieren der verschiedenen Screens:
-class Welcome(MDScreen):
+class Login(MDScreen):
    pass
 
 class CreateUser(MDScreen):
@@ -85,20 +85,19 @@ class SmartFitAIApp(MDApp):
 
 
 # Loading multible .kv Design files
-      Builder.load_file("pages/welcome.kv", encoding="utf8")
+      Builder.load_file("pages/login.kv", encoding="utf8")
       Builder.load_file("pages/registration.kv", encoding="utf8")
       Builder.load_file("pages/dashboard.kv", encoding="utf8")
       Builder.load_file("pages/search.kv", encoding="utf8")
-      # Builder.load_file("pages/login.kv", encoding="utf8")
 
 # Definition verschiedner Layouts (Aktuell nur "Darkmode")
       self.theme_cls.theme_style = "Dark"
       self.theme_cls.primary_palette = "Darkblue" 
 
-      Window.size = (1920,1080)
+      Window.size = (1200,700)
 
       sm = WindowManager()
-      sm.add_widget(Welcome(name='Welcome'))
+      sm.add_widget(Login(name='Login'))
       sm.add_widget(CreateUser(name='NewUser'))
       sm.add_widget(Dashboard(name='Dashboard'))
       sm.add_widget(RecipeSearch(name='RecipeSearch'))
