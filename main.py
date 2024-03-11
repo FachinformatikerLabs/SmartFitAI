@@ -1,12 +1,3 @@
-# Hauptanwendungsskript
-
-# Module, die man installieren muss, damit Kivy funktioniert
-# python -m pip install kivy[base] kivy_examples
-# python -m pip install pygame
-# pip install https://github.com/kivymd/KivyMD/archive/master.zip für KiviMD 2.0.1
-# ihr müsst jetzt auch bcrypt installieren bcrypt https://pypi.org/project/bcrypt/ da wir von der superbase signup auf eine eigene umgestiegen sind. in der wir einfach die datenbank füllen und unsere eigene login logik schreiben. Da passwörter nicht klar gespeichert werden nutzen wir bcrypt für die verschlüsselung des passworts
-
-
 from kivymd.app import MDApp
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
