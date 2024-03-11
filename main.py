@@ -17,6 +17,7 @@ from kivymd.uix.pickers import MDDockedDatePicker
 from kivymd.uix.navigationrail import MDNavigationRailItem
 from kivy.properties import StringProperty
 from database.conn import supabase
+from datetime import datetime
 import bcrypt
 
 
@@ -39,12 +40,16 @@ class CreateUser(MDScreen):
         # Hier hashen wir das Passwort mit bcrypt
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+        #das geburtsdatum wird als dd.mm.yyyy eingegeben und dann für die SQL db in mm.dd.yyyy umgewandelt
+        birthday_dmy = datetime.strptime(birthday, "%d.%m.%Y")
+        birthday_SQL = birthday_dmy.strftime("%m.%d.%Y")
+
         # Hier erstellen wir den Benutzer
         data = {
             "user_name": user_name,
             "email": email,
             "password": hashed_password,
-            "birthday": birthday,
+            "birthday": birthday_SQL,
         }
 
         # Führe die Datenbankeinfügung aus und prüfe auf Erfolg
