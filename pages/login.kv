@@ -30,6 +30,7 @@
 
       MDTextField:
          mode: "filled"
+         id: email
          MDTextFieldLeadingIcon:
             icon: "account"
          MDTextFieldHintText:
@@ -40,6 +41,7 @@
 
       MDTextField:
          mode: "filled"
+         id: password
          MDTextFieldLeadingIcon:
             icon: "lock"
          MDTextFieldHintText:
@@ -59,6 +61,7 @@
       MDButton:
          style: "elevated"
          pos_hint: {'center_x': 0.3, 'center_y': 0.5}
+         on_release: root.login_user()
          MDButtonIcon:
             icon: "login"
          MDButtonText:

@@ -18,7 +18,21 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 
 #Definieren der verschiedenen Screens:
 class Login(MDScreen):
-   pass
+   def login_user(self):
+      email = self.ids.email.text
+      password = self.ids.password.text
+
+      user_data = supabase.table("user_profiles").select("*").eq("email", email).execute()
+      
+      if user_data.data:
+         stored_password = user_data.data[0]["password"]
+
+         if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
+            self.manager.current = "Dashboard"
+         else: 
+            print("Falsches Passwort")
+      else:
+         print("Benutzer wurde nicht gefunden")
 
 class CreateUser(MDScreen):
 
