@@ -24,9 +24,6 @@ jobs:
       - name: Setup
         run: npm i -g @nyxb/nyxi
 
-      - name: Install
-        run: nyxci
-
       - run: npx github-craftchangelogs
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
