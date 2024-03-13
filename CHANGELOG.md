@@ -29,4 +29,5 @@
 - Nyxb ([@nyxb](http://github.com/nyxb))
 - Wab00se ([@Wab00se](https://github.com/Wab00se))
 - Huy Hang ([@ThreshOffTheBoat](https://github.com/ThreshOffTheBoat))
-
+- Ben-Ell ([@Ben-Ell](https://github.com/Ben-Ell))
+- Tobiengb ([@Tobiengb](https://github.com/Tobiengb))
