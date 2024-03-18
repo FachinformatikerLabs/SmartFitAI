@@ -86,6 +86,9 @@ class IngredientSearch(MDScreen):
 class AllergenSearch(MDScreen):
    pass
 
+class Profil(MDScreen):
+   pass
+
 class WindowManager(ScreenManager):
    pass
 
@@ -94,11 +97,12 @@ class SmartFitAIApp(MDApp):
       self.supabase = supabase
 
 
-# Loading multible .kv Design files
+# Laden der verschiedenen .kv Design Files 
       Builder.load_file("pages/login.kv", encoding="utf8")
       Builder.load_file("pages/registration.kv", encoding="utf8")
       Builder.load_file("pages/dashboard.kv", encoding="utf8")
       Builder.load_file("pages/search.kv", encoding="utf8")
+      Builder.load_file("pages/profil.kv", encoding="utf8")
 
 # Definition verschiedner Layouts (Aktuell nur "Darkmode")
       self.theme_cls.theme_style = "Dark"
@@ -113,6 +117,7 @@ class SmartFitAIApp(MDApp):
       sm.add_widget(RecipeSearch(name='RecipeSearch'))
       sm.add_widget(IngredientSearch(name='IngredientSearch'))
       sm.add_widget(AllergenSearch(name='AllergenSearch'))
+      sm.add_widget(Profil(name='Profil'))
 
       return sm
 

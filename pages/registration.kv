@@ -117,12 +117,7 @@
       size_hint: 0.5, 0.1
 
       MDLabel:
-         text: "Willkommen bei Smart Fit AI"
-         font_style: "Display"
-         color:
-
-      MDLabel:
-         text: "Dein Schlüssel zu gesunder Ernährung. Registriere dich jetzt und starte durch!"
+         text: "Willkommen bei SmartFitAI. Dein Schlüssel zur gesunder Ernährung. Registriere dich jetzt und starte durch!"
          font_style: "Title"
          color:
 
@@ -130,7 +125,7 @@
    MDBoxLayout:
       orientation: 'vertical'
       spacing: '30dp'
-      pos_hint: {'center_x': 0.5,'top': 0.9}
+      pos_hint: {'center_x': 0.5,'top': 0.8}
       size_hint: 0.5, 0.6
 
       MDTextField:
@@ -177,33 +172,12 @@
             text: "Bitte gebe dein gewünschtes Passwort"
             mode: "persistent"
 
-      MDTextField:
-         id: password_check
-         mode: "filled"
-         MDTextFieldLeadingIcon:
-            icon: "key-link"
-         MDTextFieldHintText:
-            text: "Passwort Wiederholen"
-         MDTextFieldHelperText:
-            text: "Bitte Wiederhole dein Passwort"
-            mode: "persistent"
-
-# Button für Allergene
-      MDButton:
-         style: "tonal"
-         on_release: Factory.Allergen().open()
-         pos_hint: {'center_x': 0.5}
-         size_hint_x: 0.5
-         MDButtonIcon:
-            icon: "flower-pollen-outline"
-         MDButtonText:
-            text: "Deine Allergien"
 
 # Box für die Buttons Login / Neuer Benutzer
    MDBoxLayout:
       adaptive_size: True
       orientation: 'horizontal'
-      pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+      pos_hint: {'center_x': 0.5, 'center_y': 0.1}
       spacing: '50dp'
       padding: ('0dp', '30dp', '0dp', '0dp')
 
