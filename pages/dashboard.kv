@@ -53,10 +53,20 @@
 
       MDTextField:
          mode: "filled"
+         id: search_recipe
          MDTextFieldLeadingIcon:
             icon: "magnify"
          MDTextFieldHintText:
-            text: "Rezept Suchen"
+            text: "Suchbegriff eingeben"
+      MDButton:
+         style: "elevated"
+         pos_hint: {'center_x': 0.3, 'center_y': 0.5}
+         on_release: root.search_recipe()
+         on_release: app.root.current = "Search"
+         MDButtonIcon:
+            icon: "magnify"
+         MDButtonText:
+            text: "Suchen"
    
    MDGridLayout:
       cols: 3
@@ -105,7 +115,7 @@
          overlap: True
 
          MDSmartTileImage:
-            source: "resources/knoedel-zimt-puffer-mit-gluehwein-kirschen.webp"
+            source: 
             radius: [dp(24), dp(24), dp(24), dp(24)]
 
          MDSmartTileOverlayContainer:
