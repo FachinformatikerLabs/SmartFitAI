@@ -10,6 +10,7 @@ from kivy.properties import StringProperty
 from database.conn import supabase
 from datetime import datetime
 import bcrypt
+from utils import search
 
 
 class CommonNavigationRailItem(MDNavigationRailItem):
@@ -75,6 +76,8 @@ class CreateUser(MDScreen):
             pass
 
 class Dashboard(MDScreen):
+   def search_recipe(self):
+      search.search_ingredient_id(self)
    pass
 
 class RecipeSearch(MDScreen):
@@ -86,8 +89,14 @@ class IngredientSearch(MDScreen):
 class AllergenSearch(MDScreen):
    pass
 
+
+class Search(MDScreen):
+   def search_recipe(self):
+      search.search_ingredient_id(self)
+
 class Profil(MDScreen):
    pass
+
 
 class WindowManager(ScreenManager):
    pass
@@ -114,6 +123,7 @@ class SmartFitAIApp(MDApp):
       sm.add_widget(Login(name='Login'))
       sm.add_widget(CreateUser(name='NewUser'))
       sm.add_widget(Dashboard(name='Dashboard'))
+      sm.add_widget(Search(name='Search'))
       sm.add_widget(RecipeSearch(name='RecipeSearch'))
       sm.add_widget(IngredientSearch(name='IngredientSearch'))
       sm.add_widget(AllergenSearch(name='AllergenSearch'))
