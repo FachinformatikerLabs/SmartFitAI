@@ -8,6 +8,7 @@ from kivymd.uix.pickers import MDDockedDatePicker
 from kivymd.uix.navigationrail import MDNavigationRailItem
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.card import MDCard
+from kivy.uix.image import Image
 from kivy.uix.image import AsyncImage
 from kivymd.uix.label import MDLabel
 from kivy.properties import StringProperty
@@ -132,6 +133,9 @@ class Search(MDScreen):
 
 class NavLayout(BoxLayout):
     pass
+ 
+class BackgroundLayout(Image):
+    pass
 
 class Dashboard(MDScreen):
    pass
@@ -157,6 +161,7 @@ class SmartFitAIApp(MDApp):
       Builder.load_file("pages/profil.kv", encoding="utf8")
       Builder.load_file("components/nav.kv", encoding="utf8")
       Builder.load_file("components/searchbar.kv", encoding="utf8")
+      Builder.load_file("components/background.kv", encoding="utf8")
 
 # Definition verschiedener Layouts (Aktuell nur "Darkmode")
       self.theme_cls.theme_style = "Dark"
