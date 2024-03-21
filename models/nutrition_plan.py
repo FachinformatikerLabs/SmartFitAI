@@ -1,1 +1,0 @@
-# Ernährungsplan-Klasse

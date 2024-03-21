@@ -1,7 +1,10 @@
 {
    "cSpell.words": [
+      "checkpw",
       "hashpw",
-      "kivy"
+      "kivy",
+      "kivymd",
+      "Rezeptbildern"
    ],
    "materialkv.pythonFile": "main.py"
 }
