@@ -17,7 +17,7 @@ from datetime import datetime
 import bcrypt
 import os
 from dotenv import load_dotenv
-from utils.search import search_recipes
+from utils.search import search_combined
 from kivy.core.window import Window
 from kivy.modules import inspector
 
@@ -115,7 +115,7 @@ class SearchResultCard(MDCard):
 class SearchBar(BoxLayout):
     def on_search(self, query):
         app = MDApp.get_running_app()
-        results = search_recipes(query)
+        results = search_combined(query)
         
         if results:
             app.root.current = 'Search'
@@ -148,36 +148,42 @@ class WindowManager(ScreenManager):
    pass
 
 class SmartFitAIApp(MDApp):
-   def build(self):
-      self.supabase = supabase
-      inspector.create_inspector(Window, self)
+    def switch_screen(self, screen_name):
+        self.root.current = screen_name
 
+    def build(self):
+        self.supabase = supabase
+        inspector.create_inspector(Window, self)
 
-# Laden der verschiedenen .kv Design Files 
-      Builder.load_file("pages/login.kv", encoding="utf8")
-      Builder.load_file("pages/registration.kv", encoding="utf8")
-      Builder.load_file("pages/dashboard.kv", encoding="utf8")
-      Builder.load_file("pages/search.kv", encoding="utf8")
-      Builder.load_file("pages/profil.kv", encoding="utf8")
-      Builder.load_file("components/nav.kv", encoding="utf8")
-      Builder.load_file("components/searchbar.kv", encoding="utf8")
-      Builder.load_file("components/background.kv", encoding="utf8")
+        # Laden der verschiedenen .kv Design Files 
+        Builder.load_file("pages/login.kv", encoding="utf8")
+        Builder.load_file("pages/registration.kv", encoding="utf8")
+        Builder.load_file("pages/dashboard.kv", encoding="utf8")
+        Builder.load_file("pages/search.kv", encoding="utf8")
+        Builder.load_file("pages/profil.kv", encoding="utf8")
+        Builder.load_file("components/nav.kv", encoding="utf8")
+        Builder.load_file("components/searchbar.kv", encoding="utf8")
+        Builder.load_file("components/background.kv", encoding="utf8")
 
-# Definition verschiedener Layouts (Aktuell nur "Darkmode")
-      self.theme_cls.theme_style = "Dark"
-      self.theme_cls.primary_palette = "Darkblue" 
+        # Definition verschiedener Layouts (Aktuell nur "Darkmode")
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Darkblue" 
 
-      Window.size = (1200,700)
+        Window.size = (1200,700)
 
-      sm = WindowManager()
-      sm.add_widget(Login(name='Login'))
-      sm.add_widget(CreateUser(name='NewUser'))
-      sm.add_widget(Dashboard(name='Dashboard'))
-      sm.add_widget(Search(name='Search'))
-      sm.add_widget(Profil(name='Profil'))
+        # Initialisiere den ScreenManager und füge die Screens hinzu
+        sm = WindowManager()
+        sm.add_widget(Login(name='Login'))
+        sm.add_widget(CreateUser(name='NewUser'))
+        sm.add_widget(Dashboard(name='Dashboard'))
+        sm.add_widget(Search(name='Search'))
+        sm.add_widget(Profil(name='Profil'))
 
-      return sm
+        # Setze den ScreenManager als Root-Widget der App
+        self.root = sm
+        return self.root
 
 if __name__=="__main__":
-   SmartFitAIApp().run()
+    SmartFitAIApp().run()
+
 
