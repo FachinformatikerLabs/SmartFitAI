@@ -6,11 +6,23 @@ from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.pickers import MDDockedDatePicker
 from kivymd.uix.navigationrail import MDNavigationRailItem
+from kivy.uix.boxlayout import BoxLayout
+from kivymd.uix.card import MDCard
+from kivy.uix.image import Image
+from kivy.uix.image import AsyncImage
+from kivymd.uix.label import MDLabel
 from kivy.properties import StringProperty
 from database.conn import supabase
 from datetime import datetime
 import bcrypt
-from utils import search
+import os
+from dotenv import load_dotenv
+from utils.search import search_recipes
+from kivy.core.window import Window
+from kivy.modules import inspector
+
+load_dotenv()
+DEV_MODE = os.getenv('DEV_MODE') == 'True'
 
 
 class CommonNavigationRailItem(MDNavigationRailItem):
@@ -20,6 +32,11 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 #Definieren der verschiedenen Screens:
 class Login(MDScreen):
    def login_user(self):
+      if DEV_MODE:
+          print("Entwicklungsmodus aktiv - Login übersprungen")
+          self.manager.current = "Dashboard"
+          return
+
       email = self.ids.email.text
       password = self.ids.password.text
 
@@ -74,25 +91,54 @@ class CreateUser(MDScreen):
             pass
         else:
             pass
+         
+class SearchResultCard(MDCard):
+    def __init__(self, recipe_name, image_url, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = None, None
+        self.size = "240dp", "240dp"
+        self.orientation = "vertical"
+
+        # Bild
+        self.add_widget(AsyncImage(
+            source=image_url,
+            size_hint_y=None,
+            height="140dp"
+        ))
+
+        # Name des Rezepts
+        self.add_widget(MDLabel(
+            text=recipe_name,
+            halign="center"
+        ))
+
+class SearchBar(BoxLayout):
+    def on_search(self, query):
+        app = MDApp.get_running_app()
+        results = search_recipes(query)
+        
+        if results:
+            app.root.current = 'Search'
+            search_screen = app.root.get_screen('Search')
+            search_screen.display_results(results)
+        
+class Search(MDScreen):
+    def display_results(self, results):
+        self.ids.results_grid.clear_widgets()
+        for result in results:
+            # Erstelle eine neue SearchResultCard
+            card = SearchResultCard(recipe_name=result['recipe_name'], image_url=result['image_url'])
+            # Füge die neue Karte dem GridLayout hinzu
+            self.ids.results_grid.add_widget(card)
+
+class NavLayout(BoxLayout):
+    pass
+ 
+class BackgroundLayout(Image):
+    pass
 
 class Dashboard(MDScreen):
-   def search_recipe(self):
-      search.search_ingredient_id(self)
    pass
-
-class RecipeSearch(MDScreen):
-   pass
-
-class IngredientSearch(MDScreen):
-   pass
-
-class AllergenSearch(MDScreen):
-   pass
-
-
-class Search(MDScreen):
-   def search_recipe(self):
-      search.search_ingredient_id(self)
 
 class Profil(MDScreen):
    pass
@@ -104,6 +150,7 @@ class WindowManager(ScreenManager):
 class SmartFitAIApp(MDApp):
    def build(self):
       self.supabase = supabase
+      inspector.create_inspector(Window, self)
 
 
 # Laden der verschiedenen .kv Design Files 
@@ -112,8 +159,11 @@ class SmartFitAIApp(MDApp):
       Builder.load_file("pages/dashboard.kv", encoding="utf8")
       Builder.load_file("pages/search.kv", encoding="utf8")
       Builder.load_file("pages/profil.kv", encoding="utf8")
+      Builder.load_file("components/nav.kv", encoding="utf8")
+      Builder.load_file("components/searchbar.kv", encoding="utf8")
+      Builder.load_file("components/background.kv", encoding="utf8")
 
-# Definition verschiedner Layouts (Aktuell nur "Darkmode")
+# Definition verschiedener Layouts (Aktuell nur "Darkmode")
       self.theme_cls.theme_style = "Dark"
       self.theme_cls.primary_palette = "Darkblue" 
 
@@ -124,9 +174,6 @@ class SmartFitAIApp(MDApp):
       sm.add_widget(CreateUser(name='NewUser'))
       sm.add_widget(Dashboard(name='Dashboard'))
       sm.add_widget(Search(name='Search'))
-      sm.add_widget(RecipeSearch(name='RecipeSearch'))
-      sm.add_widget(IngredientSearch(name='IngredientSearch'))
-      sm.add_widget(AllergenSearch(name='AllergenSearch'))
       sm.add_widget(Profil(name='Profil'))
 
       return sm

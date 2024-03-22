@@ -1,11 +1,7 @@
-#:kivy 2.3.0
 <Login>:
    name: "Login"
 
-# Hintergrundbild
-   Image:
-      source: 'resources/bg.png'
-      fit_mode: "fill"
+   BackgroundLayout:
 
 # Box Fürs Logo      
    MDBoxLayout:
@@ -29,6 +25,8 @@
       pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
       MDTextField:
+         write_tab: False
+         multiline: False
          mode: "filled"
          id: email
          MDTextFieldLeadingIcon:
@@ -40,6 +38,9 @@
             mode: "persistent"
 
       MDTextField:
+         write_tab: False
+         multiline: False
+         on_text_validate: root.login_user()
          mode: "filled"
          id: password
          MDTextFieldLeadingIcon:

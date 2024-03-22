@@ -1,65 +1,16 @@
-#:kivy 2.3.0
-
 <Dashboard>:
    name: "Dashboard"
-# Hintergrundbild
-   Image:
-      source: 'resources/bg.png'
-      fit_mode: "fill"
+   
+   BackgroundLayout:
 
-   MDBoxLayout:
-      MDNavigationRail:
-         anchor: "top"
-         type: "labeled"
+   NavLayout:
+      size_hint_x: None
+      width: '250dp'
 
-         MDNavigationRailMenuButton:
-            icon: "menu"
-
-         MDNavigationRailFabButton:
-            icon: "home"
-
-         CommonNavigationRailItem:
-            icon: "account-circle"
-            text: "Profil"
-            on_release: app.root.current = "Profil"
-
-         CommonNavigationRailItem:
-            icon: "star-box-outline"
-            text: "Favoriten"
-
-         CommonNavigationRailItem:
-            icon: "file-document-outline"
-            text: "Meine Rezepte"
-
-         CommonNavigationRailItem:
-            icon: "file-document-plus-outline"
-            text: "Rezept Hinzufügen"
-
-         CommonNavigationRailItem:
-            icon: "text-box-search-outline"
-            text: "Rezept Suche"
-
-   MDBoxLayout:
+   SearchBar:
       orientation: 'horizontal'
       size_hint: 0.5, 0.05
-      pos_hint: {'center_x': 0.5,'center_y': 0.95}
-
-      MDTextField:
-         mode: "filled"
-         id: search_recipe
-         MDTextFieldLeadingIcon:
-            icon: "magnify"
-         MDTextFieldHintText:
-            text: "Suchbegriff eingeben"
-      MDButton:
-         style: "elevated"
-         pos_hint: {'center_x': 0.3, 'center_y': 0.5}
-         on_release: root.search_recipe()
-         on_release: app.root.current = "Search"
-         MDButtonIcon:
-            icon: "magnify"
-         MDButtonText:
-            text: "Suchen"
+      pos_hint: {'center_x': 0.5, 'center_y': 0.95}
    
    MDGridLayout:
       cols: 3

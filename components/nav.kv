@@ -1,0 +1,33 @@
+<NavLayout>:
+    MDNavigationRail:
+        id: nav_rail
+        anchor: "top"
+        type: "labeled"
+
+        MDNavigationRailMenuButton:
+            icon: "menu"
+
+        MDNavigationRailFabButton:
+            icon: "home"
+            on_release: app.switch_screen("Dashboard")
+
+        CommonNavigationRailItem:
+            icon: "account-circle"
+            text: "Profil"
+            on_release: app.switch_screen("Profil")
+
+        CommonNavigationRailItem:
+            icon: "star-box-outline"
+            text: "Favoriten"
+
+        CommonNavigationRailItem:
+            icon: "file-document-outline"
+            text: "Meine Rezepte"
+
+        CommonNavigationRailItem:
+            icon: "file-document-plus-outline"
+            text: "Rezept Hinzufügen"
+
+        CommonNavigationRailItem:
+            icon: "text-box-search-outline"
+            text: "Rezept Suche"

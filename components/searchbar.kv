@@ -1,0 +1,11 @@
+<SearchBar>:
+    MDTextField:
+        id: search_field
+        write_tab: False
+        multiline: False
+        mode: "filled"
+        on_text_validate: root.on_search(self.text)
+        MDTextFieldLeadingIcon:
+            icon: "magnify"
+        MDTextFieldHintText:
+            text: "Suchbegriff eingeben"
