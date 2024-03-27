@@ -1,0 +1,14 @@
+<SearchPopup>:
+    orientation: 'horizontal'
+    size_hint: 0.5, 0.05
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    MDTextField:
+        id: search_field
+        write_tab: False
+        multiline: False
+        mode: "filled"
+        on_text_validate: root.on_search_pop(self.text), root.dismiss()
+        MDTextFieldLeadingIcon:
+            icon: "magnify"
+        MDTextFieldHintText:
+            text: "Name des Gerichtes eingeben"
