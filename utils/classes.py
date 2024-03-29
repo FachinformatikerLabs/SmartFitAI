@@ -108,6 +108,10 @@ class Search(MDScreen):
             # Füge die neue Karte dem GridLayout hinzu
             self.ids.results_grid.add_widget(card)
 
+
+class Construction(MDScreen):
+    pass
+  
 class SearchPopup(Popup):
     def on_search_pop(self, query):
         app = MDApp.get_running_app()
@@ -154,10 +158,12 @@ class SmartFitAIApp(MDApp):
         Builder.load_file("pages/dashboard.kv", encoding="utf8")
         Builder.load_file("pages/search.kv", encoding="utf8")
         Builder.load_file("pages/profil.kv", encoding="utf8")
+        Builder.load_file("pages/construction.kv", encoding="utf8")
         Builder.load_file("components/nav.kv", encoding="utf8")
         Builder.load_file("components/searchbar.kv", encoding="utf8")
         Builder.load_file("components/background.kv", encoding="utf8")
         Builder.load_file("components/searchpopup.kv", encoding="utf8")
+
 
         # Definition verschiedener Layouts (Aktuell nur "Darkmode")
         self.theme_cls.theme_style = "Dark"
@@ -172,6 +178,7 @@ class SmartFitAIApp(MDApp):
         sm.add_widget(Dashboard(name='Dashboard'))
         sm.add_widget(Search(name='Search'))
         sm.add_widget(Profil(name='Profil'))
+        sm.add_widget(Construction(name='Construction'))
 
         # Setze den ScreenManager als Root-Widget der App
         self.root = sm
