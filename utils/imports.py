@@ -13,10 +13,15 @@ from datetime import datetime
 import bcrypt
 import os
 from dotenv import load_dotenv
-from utils.search import search_combined
+from utils.search import search_recipe
+from utils.search import search_ingredient
 from kivy.core.window import Window
 from kivy.modules import inspector
 from kivymd.app import MDApp
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button

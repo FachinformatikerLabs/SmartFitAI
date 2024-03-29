@@ -4,8 +4,8 @@ load_dotenv()
 DEV_MODE = os.getenv('DEV_MODE') == 'True'
 
 class CommonNavigationRailItem(MDNavigationRailItem):
-   text = StringProperty()
-   icon = StringProperty()
+    text = StringProperty()
+    icon = StringProperty()
 
 #Definieren der verschiedenen Screens:
 class Login(MDScreen):
@@ -93,13 +93,12 @@ class SearchResultCard(MDCard):
 class SearchBar(BoxLayout):
     def on_search(self, query):
         app = MDApp.get_running_app()
-        results = search_combined(query)
-        
+        results = search_ingredient(query) 
         if results:
             app.root.current = 'Search'
             search_screen = app.root.get_screen('Search')
             search_screen.display_results(results)
-        
+
 class Search(MDScreen):
     def display_results(self, results):
         self.ids.results_grid.clear_widgets()
@@ -109,6 +108,16 @@ class Search(MDScreen):
             # Füge die neue Karte dem GridLayout hinzu
             self.ids.results_grid.add_widget(card)
 
+class SearchPopup(Popup):
+    def on_search_pop(self, query):
+        app = MDApp.get_running_app()
+        results = search_recipe(query) 
+        if results:
+            app.root.current = 'Search'
+            search_screen = app.root.get_screen('Search')
+            search_screen.display_results(results)
+
+
 class NavLayout(BoxLayout):
     pass
  
@@ -116,7 +125,7 @@ class BackgroundLayout(Image):
     pass
 
 class Dashboard(MDScreen):
-   pass
+    pass
 
 class Profil(MDScreen):
    pass
@@ -128,6 +137,12 @@ class WindowManager(ScreenManager):
 class SmartFitAIApp(MDApp):
     def switch_screen(self, screen_name):
         self.root.current = screen_name
+
+    def show_popup(self):
+
+        popup = SearchPopup()
+        popup.open()
+        print("geht")
 
     def build(self):
         self.supabase = supabase
@@ -142,6 +157,7 @@ class SmartFitAIApp(MDApp):
         Builder.load_file("components/nav.kv", encoding="utf8")
         Builder.load_file("components/searchbar.kv", encoding="utf8")
         Builder.load_file("components/background.kv", encoding="utf8")
+        Builder.load_file("components/searchpopup.kv", encoding="utf8")
 
         # Definition verschiedener Layouts (Aktuell nur "Darkmode")
         self.theme_cls.theme_style = "Dark"
