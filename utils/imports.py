@@ -13,8 +13,8 @@ from datetime import datetime
 import bcrypt
 import os
 from dotenv import load_dotenv
-from utils.search import search_recipe
-from utils.search import search_ingredient
+from utils.search import get_recipe_details, get_ingredients_details, search_ingredient, search_recipe
+from utils.nutritional_calculation import calculate_total_calories
 from kivy.core.window import Window
 from kivy.modules import inspector
 from kivymd.app import MDApp
