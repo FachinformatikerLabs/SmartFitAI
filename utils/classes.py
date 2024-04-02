@@ -69,10 +69,67 @@ class CreateUser(MDScreen):
             pass
         else:
             pass
-         
+
+class RecipeDetails:
+    def __init__(self, recipe_id):
+        self.recipe_id = recipe_id
+
+    def get_recipe_instructions(self):
+    
+        result = supabase.table("recipes") \
+            .select("instructions") \
+            .eq("recipe_id", self.recipe_id) \
+            .execute()
+        return result.data[0]['instructions'] if result.data else "Anweisungen nicht gefunden."
+
+    def get_ingredients_details(self):
+
+        recipe_ingredients = supabase.table("recipe_ingredients") \
+            .select("ingredient_id, amount, unit_id") \
+            .eq("recipe_id", self.recipe_id) \
+            .execute().data
+
+        ingredients_details = []
+        for item in recipe_ingredients:
+
+            ingredient_info = supabase.table("ingredients") \
+                .select("ingredient_name, cal_per_unit") \
+                .eq("ingredient_id", item['ingredient_id']) \
+                .execute().data
+
+            unit_info = supabase.table("units") \
+                .select("unit") \
+                .eq("unit_id", item['unit_id']) \
+                .execute().data
+
+            allergens_info = supabase.table("ingredient_allergens") \
+                .select("allergen_id") \
+                .eq("ingredient_id", item['ingredient_id']) \
+                .execute().data
+
+            allergens = []
+            for allergen in allergens_info:
+                allergen_name = supabase.table("allergens") \
+                    .select("allergen_name") \
+                    .eq("allergen_id", allergen['allergen_id']) \
+                    .execute().data
+                if allergen_name:
+                    allergens.append(allergen_name[0]['allergen_name'])
+
+            ingredients_details.append({
+                "ingredient_name": ingredient_info[0]['ingredient_name'] if ingredient_info else "Zutat nicht gefunden",
+                "cal_per_unit": ingredient_info[0]['cal_per_unit'] if ingredient_info else 0,
+                "amount": item['amount'],
+                "unit": unit_info[0]['unit'] if unit_info else "Einheit nicht gefunden",
+                "allergens": allergens
+            })
+
+        return ingredients_details
+
 class SearchResultCard(MDCard):
-    def __init__(self, recipe_name, image_url, **kwargs):
+    def __init__(self, recipe_id, recipe_name, image_url, **kwargs):
         super().__init__(**kwargs)
+        self.recipe_id = recipe_id
         self.size_hint = None, None
         self.size = "240dp", "240dp"
         self.orientation = "vertical"
@@ -90,6 +147,12 @@ class SearchResultCard(MDCard):
             halign="center"
         ))
 
+    def on_release(self):
+        # Rufen Sie die Methode auf, die die Details anzeigt
+        app = MDApp.get_running_app()
+        search_screen = app.root.get_screen('Search')
+        search_screen.display_recipe_details(self.recipe_id)
+
 class SearchBar(BoxLayout):
     def on_search(self, query):
         app = MDApp.get_running_app()
@@ -103,11 +166,37 @@ class Search(MDScreen):
     def display_results(self, results):
         self.ids.results_grid.clear_widgets()
         for result in results:
-            # Erstelle eine neue SearchResultCard
-            card = SearchResultCard(recipe_name=result['recipe_name'], image_url=result['image_url'])
-            # Füge die neue Karte dem GridLayout hinzu
+            card = SearchResultCard(recipe_id=result['recipe_id'], recipe_name=result['recipe_name'], image_url=result['image_url'])
+            card.bind(on_release=lambda instance, x=result['recipe_id']: self.display_recipe_details(x))
             self.ids.results_grid.add_widget(card)
+    
+    def display_recipe_details(self, recipe_id):
+        recipe_details = RecipeDetails(recipe_id)
+        instructions = recipe_details.get_recipe_instructions()
+        ingredients = recipe_details.get_ingredients_details()
 
+        ingredient_lines = []
+        allergens_set = set()
+        for ingredient in ingredients:
+
+            ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
+            allergens_set.update(ingredient['allergens'])
+
+        ingredients_text = '\n'.join(ingredient_lines)
+        allergens_text = ', '.join(allergens_set)
+
+        full_details = f"Anweisungen: {instructions}\n\nZutaten:\n{ingredients_text}\n\nEnthaltene Allergene: {allergens_text}"
+
+        content = BoxLayout(orientation='vertical', spacing=10, size_hint=(0.7, 0.5))
+        details_label = Label(text=full_details)
+        close_button = Button(text='Schließen', size_hint=(0.05, 0.05))
+        content.add_widget(details_label)
+        content.add_widget(close_button)
+        details_popup = Popup(title="Rezeptdetails",
+                              content=content,
+                              size_hint=(1.0, 1.0))
+        close_button.bind(on_press=details_popup.dismiss)
+        details_popup.open()
 
 class Construction(MDScreen):
     pass
