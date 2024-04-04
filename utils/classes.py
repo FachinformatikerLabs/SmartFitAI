@@ -69,10 +69,24 @@ class CreateUser(MDScreen):
             pass
         else:
             pass
-         
+
+class RecipeDetails:
+    def __init__(self, recipe_id):
+        self.recipe_id = recipe_id
+    
+    def get_total_calories(self):
+        return calculate_total_calories(self.recipe_id)
+    
+    def get_recipe_details(self):    
+        return get_recipe_details(self.recipe_id)
+    
+    def get_ingredients_details(self):
+        return get_ingredients_details(self.recipe_id)
+
 class SearchResultCard(MDCard):
-    def __init__(self, recipe_name, image_url, **kwargs):
+    def __init__(self, recipe_id, recipe_name, image_url, **kwargs):
         super().__init__(**kwargs)
+        self.recipe_id = recipe_id
         self.size_hint = None, None
         self.size = "240dp", "240dp"
         self.orientation = "vertical"
@@ -90,6 +104,12 @@ class SearchResultCard(MDCard):
             halign="center"
         ))
 
+    def on_release(self):
+        # Rufen Sie die Methode auf, die die Details anzeigt
+        app = MDApp.get_running_app()
+        search_screen = app.root.get_screen('Search')
+        search_screen.display_recipe_details(self.recipe_id)
+
 class SearchBar(BoxLayout):
     def on_search(self, query):
         app = MDApp.get_running_app()
@@ -103,11 +123,40 @@ class Search(MDScreen):
     def display_results(self, results):
         self.ids.results_grid.clear_widgets()
         for result in results:
-            # Erstelle eine neue SearchResultCard
-            card = SearchResultCard(recipe_name=result['recipe_name'], image_url=result['image_url'])
-            # Füge die neue Karte dem GridLayout hinzu
+            card = SearchResultCard(recipe_id=result['recipe_id'], recipe_name=result['recipe_name'], image_url=result['image_url'])
+            card.bind(on_release=lambda instance, x=result['recipe_id']: self.display_recipe_details(x))
             self.ids.results_grid.add_widget(card)
+    
+    def display_recipe_details(self, recipe_id):
+        recipe_details = RecipeDetails(recipe_id)
+        recipe_info = recipe_details.get_recipe_details()
+        instructions = recipe_info['instructions']
+        time = recipe_info['time']
+        ingredients = recipe_details.get_ingredients_details()
+        total_calories = recipe_details.get_total_calories()
 
+        ingredient_lines = []
+        allergens_set = set()
+
+        for ingredient in ingredients:
+            ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
+            allergens_set.update(ingredient['allergens'])
+
+        ingredients_text = '\n'.join(ingredient_lines)
+        allergens_text = ', '.join(allergens_set)
+
+        full_details = f"Vorbereitungszeit: {time} Minuten\n\nGesamtkalorien: {total_calories}\n\nAnweisungen: {instructions}\n\nZutaten:\n{ingredients_text}\n\nEnthaltene Allergene: {allergens_text}"
+        
+        content = BoxLayout(orientation='vertical', spacing=10, size_hint=(0.7, 0.5))
+        details_label = Label(text=full_details)
+        close_button = Button(text='Schließen', size_hint=(0.05, 0.05))
+        content.add_widget(details_label)
+        content.add_widget(close_button)
+        details_popup = Popup(title="Rezeptdetails",
+                              content=content,
+                              size_hint=(1.0, 1.0))
+        close_button.bind(on_press=details_popup.dismiss)
+        details_popup.open()
 
 class Construction(MDScreen):
     pass
