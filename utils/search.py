@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 def search_recipe(query):
     try:
         recipe_results = supabase.table("recipes") \
-            .select("recipe_name, time, instructions, image_url") \
+            .select("recipe_id, recipe_name, time, instructions, image_url") \
             .ilike("recipe_name", f"%{query}%") \
             .execute()
 
