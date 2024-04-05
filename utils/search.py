@@ -65,55 +65,82 @@ def search_ingredient(query):
     
 
 def get_recipe_details(recipe_id):    
-        result = supabase.table("recipes") \
-            .select("instructions", "time") \
+    try:
+        results = supabase.table("recipe_view") \
+            .select("recipe_id, recipe_name, time, instructions, image_url, ingredient_name, amount, unit, allergen_name") \
             .eq("recipe_id", recipe_id) \
-            .execute()
-        return {
-            'instructions': result.data[0]['instructions'],
-            'time': result.data[0]['time']
+            .execute().data
+        
+        if not results:
+            return None
+
+        recipe_details = {
+            "recipe_id": results[0]["recipe_id"],
+            "recipe_name": results[0]["recipe_name"],
+            "time": results[0]["time"],
+            "instructions": results[0]["instructions"],
+            "image_url": results[0]["image_url"],
+            "ingredients": []
         }
+        
+        ingredients_seen = set()
+        for row in results:
+            ingredient_key = (row["ingredient_name"], row["amount"], row["unit"])
+            if ingredient_key not in ingredients_seen:
+                recipe_details["ingredients"].append({
+                    "ingredient_name": row["ingredient_name"],
+                    "amount": row["amount"],
+                    "unit": row["unit"],
+                    "allergens": []
+                })
+                ingredients_seen.add(ingredient_key)
+            if row["allergen_name"]:
+                for ingredient in recipe_details["ingredients"]:
+                    if ingredient["ingredient_name"] == row["ingredient_name"]:
+                        ingredient["allergens"].append(row["allergen_name"])
+                        break
+
+        return recipe_details
+    except Exception as e:
+        print(f"Error retrieving recipe details: {e}")
+        raise e
+    
     
 def get_ingredients_details(recipe_id):
-    recipe_ingredients = supabase.table("recipe_ingredients") \
-        .select("ingredient_id, amount, unit_id") \
-        .eq("recipe_id", recipe_id) \
-        .execute().data
-
-    ingredients_details = []
-
-    for item in recipe_ingredients:
-        ingredient_info = supabase.table("ingredients") \
-            .select("ingredient_name, cal_per_unit") \
-            .eq("ingredient_id", item['ingredient_id']) \
+    try:
+        results = supabase.table("recipe_view") \
+            .select("ingredient_name, amount, unit, allergen_name") \
+            .eq("recipe_id", recipe_id) \
             .execute().data
 
-        unit_info = supabase.table("units") \
-            .select("unit") \
-            .eq("unit_id", item['unit_id']) \
-            .execute().data
+        if not results:
+            return []
 
-        allergens_info = supabase.table("ingredient_allergens") \
-            .select("allergen_id") \
-            .eq("ingredient_id", item['ingredient_id']) \
-            .execute().data
+        ingredients_details = {}
 
-        allergens = []
+        for row in results:
 
-        for allergen in allergens_info:
-            allergen_name = supabase.table("allergens") \
-                .select("allergen_name") \
-                .eq("allergen_id", allergen['allergen_id']) \
-                .execute().data
-            if allergen_name:
-                allergens.append(allergen_name[0]['allergen_name'])
+            ingredient_key = (row["ingredient_name"], row["amount"], row["unit"])
+            
+            if ingredient_key not in ingredients_details:
+                ingredients_details[ingredient_key] = {
+                    "ingredient_name": row["ingredient_name"],
+                    "amount": row["amount"],
+                    "unit": row["unit"],
+                    "allergens": set()  
+                }
+            
+            if row["allergen_name"]:
+                ingredients_details[ingredient_key]["allergens"].add(row["allergen_name"])
+        
+        ingredients_list = [
+            {
+                **details, 
+                "allergens": list(details["allergens"])
+            } for details in ingredients_details.values()
+        ]
 
-        ingredients_details.append({
-            "ingredient_name": ingredient_info[0]['ingredient_name'] if ingredient_info else "Zutat nicht gefunden",
-            "cal_per_unit": ingredient_info[0]['cal_per_unit'] if ingredient_info else 0,
-            "amount": item['amount'],
-            "unit": unit_info[0]['unit'] if unit_info else "Einheit nicht gefunden",
-            "allergens": allergens
-        })
-
-    return ingredients_details
+        return ingredients_list
+    except Exception as e:
+        print(f"Error retrieving ingredient details: {e}")
+        raise e

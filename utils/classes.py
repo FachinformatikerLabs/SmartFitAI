@@ -147,7 +147,7 @@ class Search(MDScreen):
 
         full_details = f"Vorbereitungszeit: {time} Minuten\n\nGesamtkalorien: {total_calories}\n\nAnweisungen: {instructions}\n\nZutaten:\n{ingredients_text}\n\nEnthaltene Allergene: {allergens_text}"
         
-        content = BoxLayout(orientation='vertical', spacing=10, size_hint=(0.7, 0.5))
+        content = BoxLayout(orientation='vertical', spacing=10, size_hint=(0.8, 0.8))
         details_label = Label(text=full_details)
         close_button = Button(text='Schließen', size_hint=(0.05, 0.05))
         content.add_widget(details_label)
