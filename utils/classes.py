@@ -82,6 +82,9 @@ class RecipeDetails:
     
     def get_ingredients_details(self):
         return get_ingredients_details(self.recipe_id)
+    
+    def get_random_recipe(self):
+        return get_random_recipe(self.recipe_id)
 
 class SearchResultCard(MDCard):
     def __init__(self, recipe_id, recipe_name, image_url, **kwargs):
@@ -156,6 +159,31 @@ class Recipe(MDScreen):
         self.ids.ingredients_label.text = f"Zutaten:\n" + "\n".join(ingredient_lines)
         self.ids.allergens_label.text = f"Enthaltene Allergene: {', '.join(allergens_set)}"
     
+    def on_pre_enter(self):
+        # This method is triggered just before the Recipe screen is displayed.
+        print("Fetching random recipe details")
+        recipe_details = get_random_recipe()  # Get random recipe
+        if recipe_details:
+            self.update_ui_with_recipe(recipe_details)
+        else:
+            print("No recipe details available")
+
+    def update_ui_with_recipe(self, recipe_details):
+        # Update the UI elements with the fetched recipe details
+        self.ids.recipe_image.source = recipe_details.get('image_url', 'default_image.png')
+        self.ids.time_label.text = f"Zubereitungszeit: {recipe_details.get('time', 'N/A')} Minuten"
+        self.ids.calories_label.text = f"Gesamtkalorien: {recipe_details.get('calories', 'N/A')}"
+        self.ids.instructions_label.text = f"Anweisungen: {recipe_details.get('instructions', 'N/A')}"
+        ingredients_text = "\n".join(
+            f"{ing['ingredient_name']}: {ing['amount']} {ing['unit']}"
+            for ing in recipe_details.get('ingredients', [])
+        )
+        self.ids.ingredients_label.text = f"Zutaten:\n{ingredients_text}"
+        allergens = ", ".join(
+            set(ing['allergens'] for ing in recipe_details.get('ingredients', []) if 'allergens' in ing and ing['allergens'])
+        )
+        self.ids.allergens_label.text = f"Enthaltene Allergene: {allergens}"
+
     def go_back_with_countdown(self):
         print("Starte Countdown...")
         countdown(3)
@@ -218,7 +246,6 @@ class SmartFitAIApp(MDApp):
         Builder.load_file("components/background.kv", encoding="utf8")
         Builder.load_file("components/searchpopup.kv", encoding="utf8")
 
-
         # Definition verschiedener Layouts (Aktuell nur "Darkmode")
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Darkblue" 
@@ -234,6 +261,7 @@ class SmartFitAIApp(MDApp):
         sm.add_widget(Profil(name='Profil'))
         sm.add_widget(Construction(name='Construction'))
         sm.add_widget(Recipe(name='Recipe'))
+        
 
         # Setze den ScreenManager als Root-Widget der App
         self.root = sm
