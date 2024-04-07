@@ -105,10 +105,10 @@ class SearchResultCard(MDCard):
         ))
 
     def on_release(self):
-        # Rufen Sie die Methode auf, die die Details anzeigt
         app = MDApp.get_running_app()
-        search_screen = app.root.get_screen('Search')
-        search_screen.display_recipe_details(self.recipe_id)
+        app.switch_screen('Recipe')
+        recipe_screen = app.root.get_screen('Recipe')
+        recipe_screen.display_recipe_details(self.recipe_id)
 
 class SearchBar(BoxLayout):
     def on_search(self, query):
@@ -124,9 +124,16 @@ class Search(MDScreen):
         self.ids.results_grid.clear_widgets()
         for result in results:
             card = SearchResultCard(recipe_id=result['recipe_id'], recipe_name=result['recipe_name'], image_url=result['image_url'])
-            card.bind(on_release=lambda instance, x=result['recipe_id']: self.display_recipe_details(x))
+            card.bind(on_release=lambda instance, x=result['recipe_id']: self.open_recipe_details(x))
             self.ids.results_grid.add_widget(card)
+
+    def open_recipe_details(self, recipe_id):
+        app = MDApp.get_running_app()
+        app.switch_screen('Recipe')
+        recipe_screen = app.root.get_screen('Recipe')
+        recipe_screen.display_recipe_details(recipe_id)
     
+class Recipe(MDScreen):
     def display_recipe_details(self, recipe_id):
         recipe_details = RecipeDetails(recipe_id)
         recipe_info = recipe_details.get_recipe_details()
@@ -142,21 +149,18 @@ class Search(MDScreen):
             ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
             allergens_set.update(ingredient['allergens'])
 
-        ingredients_text = '\n'.join(ingredient_lines)
-        allergens_text = ', '.join(allergens_set)
-
-        full_details = f"Vorbereitungszeit: {time} Minuten\n\nGesamtkalorien: {total_calories}\n\nAnweisungen: {instructions}\n\nZutaten:\n{ingredients_text}\n\nEnthaltene Allergene: {allergens_text}"
-        
-        content = BoxLayout(orientation='vertical', spacing=10, size_hint=(0.8, 0.8))
-        details_label = Label(text=full_details)
-        close_button = Button(text='Schließen', size_hint=(0.05, 0.05))
-        content.add_widget(details_label)
-        content.add_widget(close_button)
-        details_popup = Popup(title="Rezeptdetails",
-                              content=content,
-                              size_hint=(1.0, 1.0))
-        close_button.bind(on_press=details_popup.dismiss)
-        details_popup.open()
+        self.ids.recipe_image.source = recipe_info['image_url']
+        self.ids.time_label.text = f"Zubereitungszeit: {time} Minuten"
+        self.ids.calories_label.text = f"Gesamtkalorien: {total_calories}"
+        self.ids.instructions_label.text = f"Anweisungen: {instructions}"
+        self.ids.ingredients_label.text = f"Zutaten:\n" + "\n".join(ingredient_lines)
+        self.ids.allergens_label.text = f"Enthaltene Allergene: {', '.join(allergens_set)}"
+    
+    def go_back_with_countdown(self):
+        print("Starte Countdown...")
+        countdown(3)
+        print("Wechsle zur Suchseite...")
+        self.manager.current = 'Search'
 
 class Construction(MDScreen):
     pass
@@ -201,7 +205,8 @@ class SmartFitAIApp(MDApp):
         self.supabase = supabase
         inspector.create_inspector(Window, self)
 
-        # Laden der verschiedenen .kv Design Files 
+        # Laden der verschiedenen .kv Design Files
+        Builder.load_file("pages/recipe.kv", encoding="utf8")
         Builder.load_file("pages/login.kv", encoding="utf8")
         Builder.load_file("pages/registration.kv", encoding="utf8")
         Builder.load_file("pages/dashboard.kv", encoding="utf8")
@@ -228,6 +233,7 @@ class SmartFitAIApp(MDApp):
         sm.add_widget(Search(name='Search'))
         sm.add_widget(Profil(name='Profil'))
         sm.add_widget(Construction(name='Construction'))
+        sm.add_widget(Recipe(name='Recipe'))
 
         # Setze den ScreenManager als Root-Widget der App
         self.root = sm

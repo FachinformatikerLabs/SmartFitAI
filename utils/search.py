@@ -1,6 +1,7 @@
 from database.conn import supabase
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+import random
 
 
 def search_recipe(query):
@@ -105,7 +106,6 @@ def get_recipe_details(recipe_id):
         print(f"Error retrieving recipe details: {e}")
         raise e
     
-    
 def get_ingredients_details(recipe_id):
     try:
         results = supabase.table("recipe_view") \
@@ -144,3 +144,4 @@ def get_ingredients_details(recipe_id):
     except Exception as e:
         print(f"Error retrieving ingredient details: {e}")
         raise e
+    

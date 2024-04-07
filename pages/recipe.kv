@@ -1,0 +1,67 @@
+<Recipe>:
+    name: "Recipe"
+
+    BackgroundLayout:
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        
+        GridLayout:
+            cols: 1
+            spacing: '2dp'
+            size_hint_y: None
+            adaptive_height: True
+            padding: '5dp'
+
+            AsyncImage:
+                id: recipe_image
+                source: ''
+                size_hint: 1, None  
+                height: dp(200)  
+                pos_hint: {'center_x': 0.5}
+                keep_ratio: True
+                allow_stretch: True
+
+            MDLabel:
+                id: time_label
+                text: "Zubereitungszeit: "
+                size_hint_y: None
+                height: self.texture_size[1]
+                font_size: '8sp'
+
+            MDLabel:
+                id: calories_label
+                text: "Gesamtkalorien: "
+                size_hint_y: None
+                height: self.texture_size[1]
+                font_size: '8sp'
+
+            MDLabel:
+                id: instructions_label
+                text: "Anweisungen: "
+                size_hint_y: None
+                height: self.texture_size[1]
+                font_size: '8sp'
+
+            MDLabel:
+                id: ingredients_label
+                text: "Zutaten: "
+                size_hint_y: None
+                height: self.texture_size[1]
+                font_size: '8sp'
+
+            MDLabel:
+                id: allergens_label
+                text: "Enthaltene Allergene: "
+                size_hint_y: None
+                height: self.texture_size[1]
+                font_size: '8sp'
+
+    Button:
+        text: "Zurück"
+        size_hint: None, None
+        size: '90dp', '30dp'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        on_release:
+            app.root.get_screen('Recipe').go_back_with_countdown()
