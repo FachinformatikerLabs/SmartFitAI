@@ -190,6 +190,7 @@ class Recipe(MDScreen):
         print("Wechsle zur Suchseite...")
         self.manager.current = 'Search'
 
+
 class Construction(MDScreen):
     pass
   

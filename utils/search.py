@@ -175,9 +175,3 @@ def get_random_recipe():
     except Exception as e:
         print(f"Error fetching random recipe: {e}")
         return None
-
-
-
-
-
-
