@@ -146,38 +146,17 @@ def get_ingredients_details(recipe_id):
         print(f"Error retrieving ingredient details: {e}")
         raise e
 
+#neue zufallsrezept function benutzt nun get recipe details von oben
 def get_random_recipe():
     try:
-        # Fetch all recipe IDs
         id_response = supabase.table("recipes").select("recipe_id").execute()
         if id_response.data:
-            # Choose a random ID
             random_id = random.choice([item['recipe_id'] for item in id_response.data])
-            # Fetch the full recipe details including related data
-            recipe_query = supabase.table("recipe_view").select("""
-                recipe_id,
-                recipe_name,
-                time,
-                instructions,
-                image_url,
-                calories,
-                ingredients:ingredients(ingredient_name, amount, unit, allergens)
-            """)
-            recipe_result = recipe_query.eq("recipe_id", random_id).execute()
-            if recipe_result.data:
-                return recipe_result.data[0]
-            else:
-                print("Failed to retrieve details for random recipe")
-                return None
+            recipe_details = get_recipe_details(random_id)
+            return recipe_details if recipe_details else None
         else:
             print("Failed to fetch recipe IDs")
             return None
     except Exception as e:
         print(f"Error fetching random recipe: {e}")
         return None
-
-
-
-
-
-

@@ -82,9 +82,6 @@ class RecipeDetails:
     
     def get_ingredients_details(self):
         return get_ingredients_details(self.recipe_id)
-    
-    def get_random_recipe(self):
-        return get_random_recipe(self.recipe_id)
 
 class SearchResultCard(MDCard):
     def __init__(self, recipe_id, recipe_name, image_url, **kwargs):
@@ -136,58 +133,48 @@ class Search(MDScreen):
         recipe_screen = app.root.get_screen('Recipe')
         recipe_screen.display_recipe_details(recipe_id)
     
+#neue name für rezeptseite hinzugefügt    
 class Recipe(MDScreen):
     def display_recipe_details(self, recipe_id):
-        recipe_details = RecipeDetails(recipe_id)
-        recipe_info = recipe_details.get_recipe_details()
-        instructions = recipe_info['instructions']
-        time = recipe_info['time']
-        ingredients = recipe_details.get_ingredients_details()
-        total_calories = recipe_details.get_total_calories()
+        recipe_details = RecipeDetails(recipe_id).get_recipe_details()
+        if recipe_details:            
+            self.ids.recipe_image.source = recipe_details['image_url']
+            self.ids.name_label.text = f"Rezeptname: {recipe_details['recipe_name']}"
+            self.ids.time_label.text = f"Zubereitungszeit: {recipe_details['time']} Minuten"
+            self.ids.calories_label.text = f"Gesamtkalorien: {calculate_total_calories(recipe_id)}"
+            self.ids.instructions_label.text = f"Anweisungen: {recipe_details['instructions']}"
+            ingredients_details = RecipeDetails(recipe_id).get_ingredients_details()
 
-        ingredient_lines = []
-        allergens_set = set()
-
-        for ingredient in ingredients:
-            ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
-            allergens_set.update(ingredient['allergens'])
-
-        self.ids.recipe_image.source = recipe_info['image_url']
-        self.ids.time_label.text = f"Zubereitungszeit: {time} Minuten"
-        self.ids.calories_label.text = f"Gesamtkalorien: {total_calories}"
-        self.ids.instructions_label.text = f"Anweisungen: {instructions}"
-        self.ids.ingredients_label.text = f"Zutaten:\n" + "\n".join(ingredient_lines)
-        self.ids.allergens_label.text = f"Enthaltene Allergene: {', '.join(allergens_set)}"
-    
+            ingredient_lines = []
+            allergens_set = set()
+            for ingredient in ingredients_details:
+                ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
+                allergens_set.update(ingredient['allergens'])
+            
+            self.ids.ingredients_label.text = f"Zutaten:\n" + "\n".join(ingredient_lines)
+            self.ids.allergens_label.text = f"Enthaltene Allergene: {', '.join(allergens_set)}"
+        else:
+            print("Details for the recipe not found")
+#        
     def on_pre_enter(self):
-        # This method is triggered just before the Recipe screen is displayed.
         print("Fetching random recipe details")
-        recipe_details = get_random_recipe()  # Get random recipe
+        recipe_details = get_random_recipe()
         if recipe_details:
-            self.update_ui_with_recipe(recipe_details)
+            self.display_recipe_details(recipe_details['recipe_id'])
         else:
             print("No recipe details available")
-
-    def update_ui_with_recipe(self, recipe_details):
-        # Update the UI elements with the fetched recipe details
-        self.ids.recipe_image.source = recipe_details.get('image_url', 'default_image.png')
-        self.ids.time_label.text = f"Zubereitungszeit: {recipe_details.get('time', 'N/A')} Minuten"
-        self.ids.calories_label.text = f"Gesamtkalorien: {recipe_details.get('calories', 'N/A')}"
-        self.ids.instructions_label.text = f"Anweisungen: {recipe_details.get('instructions', 'N/A')}"
-        ingredients_text = "\n".join(
-            f"{ing['ingredient_name']}: {ing['amount']} {ing['unit']}"
-            for ing in recipe_details.get('ingredients', [])
-        )
-        self.ids.ingredients_label.text = f"Zutaten:\n{ingredients_text}"
-        allergens = ", ".join(
-            set(ing['allergens'] for ing in recipe_details.get('ingredients', []) if 'allergens' in ing and ing['allergens'])
-        )
-        self.ids.allergens_label.text = f"Enthaltene Allergene: {allergens}"
-
+#überladen recipe details mit durchgemischte reihenfolge der zutaten aus dem gleichen rezept =]
+    def load_overloaded_random_recipe(self):
+        overloaded_details = overload_with_shuffled_ingredients()
+        if overloaded_details:
+            self.display_recipe_details(overloaded_details['recipe_id'])
+        else:
+            print("Failed to load overloaded recipe")
+#rechtschreibfehler verbessert
     def go_back_with_countdown(self):
         print("Starte Countdown...")
         countdown(3)
-        print("Wechsle zur Suchseite...")
+        print("Wechsel zur Suchseite...")
         self.manager.current = 'Search'
 
 class Construction(MDScreen):
@@ -246,6 +233,7 @@ class SmartFitAIApp(MDApp):
         Builder.load_file("components/background.kv", encoding="utf8")
         Builder.load_file("components/searchpopup.kv", encoding="utf8")
 
+
         # Definition verschiedener Layouts (Aktuell nur "Darkmode")
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Darkblue" 
@@ -261,7 +249,6 @@ class SmartFitAIApp(MDApp):
         sm.add_widget(Profil(name='Profil'))
         sm.add_widget(Construction(name='Construction'))
         sm.add_widget(Recipe(name='Recipe'))
-        
 
         # Setze den ScreenManager als Root-Widget der App
         self.root = sm

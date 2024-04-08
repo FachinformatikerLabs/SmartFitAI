@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 from utils.search import get_recipe_details, get_ingredients_details, search_ingredient, search_recipe, get_random_recipe
 from utils.nutritional_calculation import calculate_total_calories
 from assignments.recursion import countdown
+from assignments.overload import overload_with_shuffled_ingredients
 from kivy.core.window import Window
 from kivy.modules import inspector
 from kivymd.app import MDApp
