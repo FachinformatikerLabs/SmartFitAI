@@ -1,5 +1,6 @@
 import time
 #zählt von n runter auf 1
+
 def countdown(n):
     if n <= 0:
         return
