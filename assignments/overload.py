@@ -1,42 +1,20 @@
-import random
-from utils.search import get_recipe_details, get_ingredients_details
-from database.conn import supabase
+#Dozentenaufgabe überladen und lambdafilter
+from utils.search import get_random_recipe
 
-def get_random_recipe():
-    id_response = supabase.table("recipes").select("recipe_id").execute()
-    if id_response.data:
+def overload_ingredients():
 
-        random_id = random.choice([item['recipe_id'] for item in id_response.data])
-        return get_recipe_details(random_id)
-    else:
-        print("Failed to fetch recipe IDs")
-        return None
-
-def get_shuffled_ingredients_recipe():
+    #hole mir rezept aus der search via get_random_recipe
     recipe_details = get_random_recipe()
-    if not recipe_details:
-        print("No recipe found")
-        return None, None
 
     recipe_id = recipe_details['recipe_id']
-    ingredients_details = get_ingredients_details(recipe_id)
+    #zieht die rezept infos
+    ingredients_details = recipe_details(recipe_id)
 
-    random.shuffle(ingredients_details)
-    return recipe_details, ingredients_details
+    #filter um alles zu auszuwählen dass "a" "e" "i" "o" "u" "ä" "ö" "ü" beinhaltet aber es macht hier absolut garnix weil das alle worte sind
+    letter_filter = list(filter(lambda x: all(letter in 'aeiouäöü' for letter in x), ingredients_details))
 
-def overload_with_shuffled_ingredients():
-    from utils.classes import RecipeDetails 
-    
-    recipe_details = get_random_recipe()
-    if not recipe_details:
-        print("No recipe found")
-        return None
-
-    recipe_id = recipe_details['recipe_id']
-    ingredients_details = RecipeDetails(recipe_id).get_ingredients_details()
-
-    random.shuffle(ingredients_details)
+    # Copy the original recipe details and substitute the ingredients list with the "trolled" one
     overloaded_recipe_details = recipe_details.copy()
-    overloaded_recipe_details['ingredients'] = ingredients_details
+    overloaded_recipe_details['ingredients'] = letter_filter
 
-    return overloaded_recipe_details
+    return overloaded_recipe_details #werden dann in classes überladen
