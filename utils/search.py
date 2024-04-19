@@ -88,62 +88,21 @@ def get_recipe_details(recipe_id):
         for row in results:
             ingredient_key = (row["ingredient_name"], row["amount"], row["unit"])
             if ingredient_key not in ingredients_seen:
-                recipe_details["ingredients"].append({
+                ingredient_details = {
                     "ingredient_name": row["ingredient_name"],
                     "amount": row["amount"],
                     "unit": row["unit"],
                     "allergens": []
-                })
+                }
+                recipe_details["ingredients"].append(ingredient_details)
                 ingredients_seen.add(ingredient_key)
+            
             if row["allergen_name"]:
-                for ingredient in recipe_details["ingredients"]:
-                    if ingredient["ingredient_name"] == row["ingredient_name"]:
-                        ingredient["allergens"].append(row["allergen_name"])
-                        break
+                ingredient_details["allergens"].append(row["allergen_name"])
 
         return recipe_details
     except Exception as e:
         print(f"Error retrieving recipe details: {e}")
-        raise e
-    
-    
-def get_ingredients_details(recipe_id):
-    try:
-        results = supabase.table("recipe_view") \
-            .select("ingredient_name, amount, unit, allergen_name") \
-            .eq("recipe_id", recipe_id) \
-            .execute().data
-
-        if not results:
-            return []
-
-        ingredients_details = {}
-
-        for row in results:
-
-            ingredient_key = (row["ingredient_name"], row["amount"], row["unit"])
-            
-            if ingredient_key not in ingredients_details:
-                ingredients_details[ingredient_key] = {
-                    "ingredient_name": row["ingredient_name"],
-                    "amount": row["amount"],
-                    "unit": row["unit"],
-                    "allergens": set()  
-                }
-            
-            if row["allergen_name"]:
-                ingredients_details[ingredient_key]["allergens"].add(row["allergen_name"])
-        
-        ingredients_list = [
-            {
-                **details, 
-                "allergens": list(details["allergens"])
-            } for details in ingredients_details.values()
-        ]
-
-        return ingredients_list
-    except Exception as e:
-        print(f"Error retrieving ingredient details: {e}")
         raise e
 
 #neue zufallsrezept function benutzt nun get recipe details von oben

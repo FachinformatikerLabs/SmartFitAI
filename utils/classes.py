@@ -79,9 +79,6 @@ class RecipeDetails:
     
     def get_recipe_details(self):    
         return get_recipe_details(self.recipe_id)
-    
-    def get_ingredients_details(self):
-        return get_ingredients_details(self.recipe_id)
 
 class SearchResultCard(MDCard):
     def __init__(self, recipe_id, recipe_name, image_url, **kwargs):
@@ -137,39 +134,36 @@ class Search(MDScreen):
 class Recipe(MDScreen):
     def display_recipe_details(self, recipe_id):
         recipe_details = RecipeDetails(recipe_id).get_recipe_details()
-        if recipe_details:            
+        if recipe_details:
             self.ids.recipe_image.source = recipe_details['image_url']
             self.ids.name_label.text = f"Rezeptname: {recipe_details['recipe_name']}"
             self.ids.time_label.text = f"Zubereitungszeit: {recipe_details['time']} Minuten"
             self.ids.calories_label.text = f"Gesamtkalorien: {calculate_total_calories(recipe_id)}"
             self.ids.instructions_label.text = f"Anweisungen: {recipe_details['instructions']}"
-            ingredients_details = RecipeDetails(recipe_id).get_ingredients_details()
-
-            ingredient_lines = []
-            allergens_set = set()
-            for ingredient in ingredients_details:
-                ingredient_lines.append(f"{ingredient['ingredient_name']}: {ingredient['amount']} {ingredient['unit']}")
-                allergens_set.update(ingredient['allergens'])
             
-            self.ids.ingredients_label.text = f"Zutaten:\n" + "\n".join(ingredient_lines)
-            self.ids.allergens_label.text = f"Enthaltene Allergene: {', '.join(allergens_set)}"
+            ingredient_lines = [f"{ing['ingredient_name']}: {ing['amount']} {ing['unit']}" for ing in recipe_details['ingredients']]
+            allergens_set = {allergen for ing in recipe_details['ingredients'] for allergen in ing['allergens']}
+            
+            self.ids.ingredients_label.text = "Zutaten:\n" + "\n".join(ingredient_lines)
+            self.ids.allergens_label.text = "Enthaltene Allergene: " + ', '.join(allergens_set)
         else:
             print("Details for the recipe not found")
 #        
     def on_pre_enter(self):
-        print("Fetching random recipe details")
         recipe_details = get_random_recipe()
         if recipe_details:
             self.display_recipe_details(recipe_details['recipe_id'])
         else:
             print("No recipe details available")
+
 #überladen recipe details mit durchgemischte reihenfolge der zutaten aus dem gleichen rezept =]
     def load_overloaded_random_recipe(self):
-        overloaded_details = overload_with_shuffled_ingredients()
+        overloaded_details = overload_ingredients()
         if overloaded_details:
             self.display_recipe_details(overloaded_details['recipe_id'])
         else:
             print("Failed to load overloaded recipe")
+            
 #rechtschreibfehler verbessert
     def go_back_with_countdown(self):
         print("Starte Countdown...")
