@@ -18,7 +18,7 @@ from utils.search import get_recipe_details, search_ingredient, search_recipe, g
 from utils.nutritional_calculation import calculate_total_calories
 from assignments.recursion import countdown
 from assignments.overload import overload_ingredients
-from kivy.core.window import Window
+from assignments.singleton import RecipeOfTheDay
 from kivy.modules import inspector
 from kivymd.app import MDApp
 from kivy.uix.widget import Widget
