@@ -71,10 +71,10 @@ class CreateUser(MDScreen):
             pass
 
 class RecipeDetails:
-    def __init__(self, recipe_id):
+    def __init__(self, recipe_id: int): #annotation: Typen-Hinweis integer
         self.recipe_id = recipe_id
     
-    def get_total_calories(self):
+    def get_total_calories(self) -> float: #annotation: Typen-Hinweis float
         return calculate_total_calories(self.recipe_id)
     
     def get_recipe_details(self):    
@@ -108,7 +108,7 @@ class SearchResultCard(MDCard):
         recipe_screen.display_recipe_details(self.recipe_id)
 
 class SearchBar(BoxLayout):
-    def on_search(self, query):
+    def on_search(self, query: str) -> None: #annotation: Typen-Hinweis string
         app = MDApp.get_running_app()
         results = search_ingredient(query) 
         if results:
@@ -129,8 +129,39 @@ class Search(MDScreen):
         app.switch_screen('Recipe')
         recipe_screen = app.root.get_screen('Recipe')
         recipe_screen.display_recipe_details(recipe_id)
-    
-#neue name für rezeptseite hinzugefügt    
+
+#rezept des tages
+class RecipeOfTheDayScreen(MDScreen):
+    def on_pre_enter(self):
+        #recipe of the day laden 
+        self.display_recipeoftheday()
+
+    def display_recipeoftheday(self):
+        #daten aus dem singleton holen
+        recipe_details = RecipeOfTheDay.get_recipe_of_the_day()
+        if recipe_details:
+            self.update_recipe_details(recipe_details)
+        else:
+            print("Rezeptdetails konnten nicht geladen werden")
+
+    def update_recipe_details(self, recipe_details):
+        #Rezeptdetails aktualisieren
+        self.ids.recipe_image.source = recipe_details.get('image_url', 'default_image.jpg')
+        self.ids.name_label.text = f"Rezeptname: {recipe_details.get('recipe_name', 'Unbekanntes Rezept')}"
+        self.ids.time_label.text = f"Zubereitungszeit: {recipe_details.get('time', 'Unbekannte Zeit')} Minuten"
+        self.ids.calories_label.text = f"Gesamtkalorien: {calculate_total_calories(recipe_details.get('recipe_id', None))}"
+        self.ids.instructions_label.text = f"Anweisungen: {recipe_details.get('instructions', 'Keine Anweisungen verfügbar')}"
+
+        #Listen für Zutaten und Allergene hier
+        ingredient_lines = [f"{ing['ingredient_name']}: {ing['amount']} {ing['unit']}" for ing in recipe_details.get('ingredients', [])]
+        allergens_set = {allergen for ing in recipe_details.get('ingredients', []) for allergen in ing.get('allergens', [])}
+
+        self.ids.ingredients_label.text = "Zutaten:\n" + "\n".join(ingredient_lines)
+        self.ids.allergens_label.text = "Enthaltene Allergene: " + ', '.join(allergens_set)
+        self.ids.special_message_label.text = recipe_details.get('special_message', 'Heute ist ein ganz normaler Tag.') #Wenn tag in Liste eingetragen gibt er speziellen Text aus
+
+
+#rezeptseite 
 class Recipe(MDScreen):
     def display_recipe_details(self, recipe_id):
         recipe_details = RecipeDetails(recipe_id).get_recipe_details()
@@ -148,7 +179,8 @@ class Recipe(MDScreen):
             self.ids.allergens_label.text = "Enthaltene Allergene: " + ', '.join(allergens_set)
         else:
             print("Details for the recipe not found")
-#        
+
+#zufallsrezept         
     def on_pre_enter(self):
         recipe_details = get_random_recipe()
         if recipe_details:
@@ -156,7 +188,7 @@ class Recipe(MDScreen):
         else:
             print("No recipe details available")
 
-#überladen recipe details mit durchgemischte reihenfolge der zutaten aus dem gleichen rezept =]
+#überladen recipe details mit regex zutaten aus dem gleichen rezept aus der overload.py
     def load_overloaded_random_recipe(self):
         overloaded_details = overload_ingredients()
         if overloaded_details:
@@ -164,7 +196,7 @@ class Recipe(MDScreen):
         else:
             print("Failed to load overloaded recipe")
             
-#rechtschreibfehler verbessert
+#rekursiver countdown wenn zurück button gedrückt wird
     def go_back_with_countdown(self):
         print("Starte Countdown...")
         countdown(3)
@@ -222,6 +254,7 @@ class SmartFitAIApp(MDApp):
         Builder.load_file("pages/search.kv", encoding="utf8")
         Builder.load_file("pages/profil.kv", encoding="utf8")
         Builder.load_file("pages/construction.kv", encoding="utf8")
+        Builder.load_file("pages/recipeoftheday.kv", encoding="utf8")
         Builder.load_file("components/nav.kv", encoding="utf8")
         Builder.load_file("components/searchbar.kv", encoding="utf8")
         Builder.load_file("components/background.kv", encoding="utf8")
@@ -243,6 +276,7 @@ class SmartFitAIApp(MDApp):
         sm.add_widget(Profil(name='Profil'))
         sm.add_widget(Construction(name='Construction'))
         sm.add_widget(Recipe(name='Recipe'))
+        sm.add_widget(RecipeOfTheDayScreen(name='RecipeOfTheDay'))
 
         # Setze den ScreenManager als Root-Widget der App
         self.root = sm

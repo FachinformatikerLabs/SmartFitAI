@@ -1,20 +1,22 @@
-#Dozentenaufgabe überladen und lambdafilter
+#Dozentenaufgabe Überladen und RegEx
 from utils.search import get_random_recipe
+import re
 
 def overload_ingredients():
 
     #hole mir rezept aus der search via get_random_recipe
     recipe_details = get_random_recipe()
+    if not recipe_details:
+        return None
 
-    recipe_id = recipe_details['recipe_id']
-    #zieht die rezept infos
-    ingredients_details = recipe_details(recipe_id)
+    #RegEx zur Überprüfung auf Vokale
+    regex_pattern = r"[aeiouäöüy]"
 
-    #filter um alles zu auszuwählen dass "a" "e" "i" "o" "u" "ä" "ö" "ü" beinhaltet aber es macht hier absolut garnix weil das alle worte sind
-    letter_filter = list(filter(lambda x: all(letter in 'aeiouäöü' for letter in x), ingredients_details))
+    #filtert zutaten die mindestens eins von diesen buchstaben "a" "e" "i" "o" "u" "ä" "ö" "ü" "y" beinhaltet, aber es macht hier absolut garnix weil das alle zutaten sind
+    letter_filter = [ing for ing in recipe_details['ingredients'] if re.search(regex_pattern, ing['ingredient_name'], re.IGNORECASE)]
 
-    # Copy the original recipe details and substitute the ingredients list with the "trolled" one
+    #kopiert die originalliste der recipedetails und ersetzt die mit der "getrollten" zutaten
     overloaded_recipe_details = recipe_details.copy()
     overloaded_recipe_details['ingredients'] = letter_filter
 
-    return overloaded_recipe_details #werden dann in classes überladen
+    return overloaded_recipe_details #werden dann in classes.py überladen
