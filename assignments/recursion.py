@@ -1,4 +1,4 @@
-#Dozentenaufgabe Rekursion
+# TODO: Rekursion: Ein Countdown Timer der rekursiv funktioniert dieser wird aufgerufen wenn der Zurück-Button angeklickt wird
 import time
 #zählt von n runter auf 1
 def countdown(n):

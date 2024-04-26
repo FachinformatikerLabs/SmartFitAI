@@ -71,6 +71,7 @@ class CreateUser(MDScreen):
             pass
 
 class RecipeDetails:
+# TODO: Annotation: Rezept ID als Integer und Gesamtkalorien als Fließkommazahl
     def __init__(self, recipe_id: int): #annotation: Typen-Hinweis integer
         self.recipe_id = recipe_id
     
@@ -188,7 +189,7 @@ class Recipe(MDScreen):
         else:
             print("No recipe details available")
 
-#überladen recipe details mit regex zutaten aus dem gleichen rezept aus der overload.py
+# TODO: Überladen: Rezeptzutaten von einer ID wird mit den RegEx gefilterten Zutaten aus dem gleichen rezept aus der overload.py überladen
     def load_overloaded_random_recipe(self):
         overloaded_details = overload_ingredients()
         if overloaded_details:
