@@ -16,6 +16,7 @@ def calculate_total_calories(recipe_id):
             .execute().data
 
         if cal_info:
+# TODO: Lambda Map    
         #nutze die map funktion um meine kalorien pro einheit mit 1 zu multiplizieren könnte man später nutzen "Wieviel Portionen" Abfrage Zutatenmenge zu erhöhen
             n=1
             map_amount = list(map(lambda x: x * n, [ingredient['amount']]))[0]

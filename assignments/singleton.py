@@ -7,6 +7,7 @@ class RecipeOfTheDay:
     _last_update = None #Datum der letzten Aktualisierung speichern: am Anfang noch None
     _recipe_of_the_day = None #speichern des aufgerufenen Rezepts
 
+# TODO: Singleton: statische Methode
     @staticmethod
     def get_recipe_of_the_day():
         today = datetime.date.today()
@@ -22,7 +23,8 @@ class RecipeOfTheDay:
 
 
     @staticmethod
-    def get_special_message(date: datetime.datetime) -> str: #Annotation Typ-Hinweis String
+# TODO: Annotation: Typ-Hinweis Datum als String
+    def get_special_message(date: datetime.datetime) -> str: 
         date_str = date.strftime('%m-%d') #Datum holen
 
         #Text zu bestimmten Tagen
