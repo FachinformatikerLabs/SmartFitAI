@@ -2,12 +2,13 @@
 import datetime
 from utils.search import get_random_recipe
 
+# TODO: Singleton
 class RecipeOfTheDay:
-    #Klassenvariablen
+    #Private Klassenvariablen zur Speicherung von Rezept des Tages und Datum
     _last_update = None #Datum der letzten Aktualisierung speichern: am Anfang noch None
     _recipe_of_the_day = None #speichern des aufgerufenen Rezepts
 
-# TODO: Singleton: statische Methode
+
     @staticmethod
     def get_recipe_of_the_day():
         today = datetime.date.today()
@@ -20,7 +21,6 @@ class RecipeOfTheDay:
             if RecipeOfTheDay._recipe_of_the_day:
                 RecipeOfTheDay._recipe_of_the_day['special_message'] = message
         return RecipeOfTheDay._recipe_of_the_day
-
 
     @staticmethod
 # TODO: Annotation: Typ-Hinweis Datum als String

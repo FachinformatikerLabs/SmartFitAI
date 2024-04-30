@@ -9,7 +9,7 @@ def overload_ingredients():
     if not recipe_details:
         return None
 
-    #RegEx zur Überprüfung auf Vokale
+# TODO: RegEx zur Überprüfung auf Vokale
     regex_pattern = r"[aeiouäöüy]"
 
     #filtert zutaten die mindestens eins von diesen buchstaben "a" "e" "i" "o" "u" "ä" "ö" "ü" "y" beinhaltet, aber es macht hier absolut garnix weil das alle zutaten sind
